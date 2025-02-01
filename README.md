@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# Online Job Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive, and user-friendly online job portal built with **React**, **TypeScript**, **Material-UI (MUI)**, and **Formik**. This application allows admins to post jobs and manage applications, while users can browse job listings and apply for positions.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+### Admin Features
+- **Admin Login**: Secure login for admins with form validation.
+- **Post Jobs**: Admins can post new job listings with details like title, company, location, salary, and description.
+- **Dashboard**: Admins can view and manage job applications, update application status, and filter applications.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### User Features
+- **Job Listings**: Users can browse job listings with filters (e.g., job type, location, salary) and search functionality.
+- **Job Details**: Users can view detailed information about a job, including requirements and deadlines.
+- **Apply for Jobs**: Users can apply for jobs by submitting their details, resume, and cover letter.
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Technologies Used
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Frontend**:
+  - React
+  - TypeScript
+  - Material-UI (MUI) for UI components
+  - Formik for form handling and validation
+  - React Router for navigation
+- **State Management**:
+  - React Context API
+- **Styling**:
+  - CSS (with MUI for component styling)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm (v8 or higher)
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone [https://github.com/your-username/online-job-portal.git](https://github.com/AhmadOmar1/JobsApplication)
+   cd JobsApplication
