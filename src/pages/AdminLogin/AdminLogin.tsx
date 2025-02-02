@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom'
 const AdminLogin = () => {
   const navigate = useNavigate();
 
-  const formInitalValues = {
+  const formInitialValues = {
     email: '',
     password: '',
   }
 
   const formik = useFormik({
-    initialValues: formInitalValues,
+    initialValues: formInitialValues,
     validationSchema: LOGIN_VALIDATION_SCHEMA,
     onSubmit: (values) => {
       if (values.email === "admin@admin" && values.password === "admin") {
