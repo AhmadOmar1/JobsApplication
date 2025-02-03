@@ -13,6 +13,7 @@ import {
   Select,
   MenuItem,
   FormControl,
+  Paper,
 } from "@mui/material";
 import { useState } from "react";
 
@@ -25,10 +26,17 @@ const AdminDashboard = () => {
     "All" | "Pending" | "Reviewed" | "Rejected"
   >("All");
 
+  // Map job IDs to job titles
   const jobTitleMap = jobs.reduce((map, job) => {
     map[job.id] = job.title;
     return map;
   }, {} as Record<string, string>);
+
+  // Calculate total applications per job
+  const jobApplicationCount = applications.reduce((countMap, app) => {
+    countMap[app.jobId] = (countMap[app.jobId] || 0) + 1;
+    return countMap;
+  }, {} as Record<string, number>);
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -45,6 +53,34 @@ const AdminDashboard = () => {
         ➕ Post New Job
       </Button>
 
+      {/* Total Applications Per Job Section */}
+      <Paper sx={{ padding: 3, marginBottom: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          📊 Total Applications Per Job
+        </Typography>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <strong>Job Title</strong>
+              </TableCell>
+              <TableCell>
+                <strong>Total Applications</strong>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {jobs.map((job) => (
+              <TableRow key={job.id}>
+                <TableCell>{job.title}</TableCell>
+                <TableCell>{jobApplicationCount[job.id] || 0}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+
+      {/* Filter Section */}
       <Box sx={{ display: "flex", marginBottom: 4 }}>
         <FormControl sx={{ minWidth: 200 }}>
           <Select
@@ -63,6 +99,7 @@ const AdminDashboard = () => {
         </FormControl>
       </Box>
 
+      {/* Applications Table */}
       <Box sx={{ overflowX: "auto" }}>
         <Table>
           <TableHead>
