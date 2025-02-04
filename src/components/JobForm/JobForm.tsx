@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { IJob } from "../../types/jobTypes";
 import { validateField, validateForm } from "../../utils/validation";
-
+import styles from "./job-form.module.css";
 const jobTypes: IJob["type"][] = [
   "Full-time",
   "Part-time",
@@ -92,11 +92,7 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-    >
+    <Box component="form" onSubmit={handleSubmit} className={styles.form}>
       <TextField
         label="Job Title"
         name="title"
@@ -105,6 +101,7 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         error={!!errors.title}
         helperText={errors.title}
         required
+        className={styles.textField}
       />
       <TextField
         label="Company"
@@ -114,6 +111,7 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         error={!!errors.company}
         helperText={errors.company}
         required
+        className={styles.textField}
       />
       <TextField
         label="Location"
@@ -123,6 +121,7 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         error={!!errors.location}
         helperText={errors.location}
         required
+        className={styles.textField}
       />
       <TextField
         label="Salary"
@@ -132,6 +131,7 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         error={!!errors.salary}
         helperText={errors.salary}
         required
+        className={styles.textField}
         slotProps={{
           htmlInput: {
             inputMode: "numeric",
@@ -142,7 +142,7 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
           },
         }}
       />
-      <FormControl required>
+      <FormControl required className={styles.select}>
         <Select name="type" value={jobData.type} onChange={handleTypeChange}>
           {jobTypes.map((type) => (
             <MenuItem key={type} value={type}>
@@ -161,6 +161,7 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         required
         multiline
         rows={4}
+        className={styles.textField}
       />
       <TextField
         label="Deadline"
@@ -171,9 +172,15 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         error={!!errors.deadline}
         helperText={errors.deadline}
         required
+        className={styles.textField}
         slotProps={{ inputLabel: { shrink: true } }}
       />
-      <Button type="submit" variant="contained" color="primary">
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        className={styles.button}
+      >
         Post Job
       </Button>
     </Box>

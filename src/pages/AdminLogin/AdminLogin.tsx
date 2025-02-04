@@ -1,37 +1,36 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  Container,
-  Paper,
   TextField,
   Typography,
   Alert,
+  Container,
 } from "@mui/material";
 import styles from "./AdminLogin.module.css";
 import { useFormik } from "formik";
 import { LOGIN_VALIDATION_SCHEMA } from "../../constants";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../providers/AuthProvider";
+import { useAuth } from "../../hooks/useAuth";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
+  const { isAuthenticated, login } = useAuth();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (authContext?.isAuthenticated) {
+    if (isAuthenticated) {
       navigate("/admin/dashboard");
     }
-  }, [authContext, navigate]);
+  }, [isAuthenticated, navigate]);
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: LOGIN_VALIDATION_SCHEMA,
     onSubmit: (values) => {
-      const loginError = authContext?.login(values.email, values.password);
+      const loginError = login(values.email, values.password);
       if (!loginError) {
-        navigate("/admin/dashboard"); 
+        navigate("/admin/dashboard");
       } else {
         setError(loginError);
       }
@@ -40,78 +39,72 @@ const AdminLogin = () => {
 
   return (
     <div className={styles.container}>
-      <Container
-        maxWidth="md"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-        }}
-      >
-        <Paper
-          elevation={3}
-          sx={{
-            padding: 10,
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-            width: "100%",
-          }}
-        >
-          <Typography
-            variant="h5"
-            color="secondary"
-            component="h1"
-            align="left"
-            gutterBottom
-          >
-            Admin Login
-          </Typography>
-
-          {error && <Alert severity="error">{error}</Alert>}
-
-          <Box
-            component="form"
-            onSubmit={formik.handleSubmit}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              width: "100%",
-            }}
-          >
-            <TextField
-              label="Email"
-              type="email"
-              name="email"
-              onChange={formik.handleChange}
-              fullWidth
-              value={formik.values.email}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
-            />
-            <TextField
-              label="Password"
-              type="password"
-              name="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-              fullWidth
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              color="info"
-              sx={{ width: "50%", margin: "auto" }}
+      <Box className={styles.leftSection}>
+        <Typography variant="h3" className={styles.welcomeText}>
+          Welcome to Online Job Portal
+        </Typography>
+        <Typography variant="body1" className={styles.description}>
+          Our platform connects job seekers with top employers. Whether you're
+          looking for a full-time, part-time, or remote position, we've got you
+          covered. Explore new career opportunities and take the next step in
+          your professional journey.
+        </Typography>
+      </Box>
+      <Box className={styles.rightSection}>
+        <Container maxWidth="sm">
+          <Box className={styles.formContainer}>
+            <Typography
+              variant="h5"
+              color="secondary"
+              component="h1"
+              align="center"
+              gutterBottom
+              className={styles.title}
             >
-              Login
-            </Button>
+              Admin Login
+            </Typography>
+
+            {error && <Alert severity="error">{error}</Alert>}
+
+            <Box
+              component="form"
+              onSubmit={formik.handleSubmit}
+              className={styles.form}
+            >
+              <TextField
+                label="Email"
+                type="email"
+                name="email"
+                onChange={formik.handleChange}
+                fullWidth
+                value={formik.values.email}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              />
+              <TextField
+                label="Password"
+                type="password"
+                name="password"
+                onChange={formik.handleChange}
+                fullWidth
+                value={formik.values.password}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={styles.loginButton}
+              >
+                Login
+              </Button>
+            </Box>
           </Box>
-        </Paper>
-      </Container>
+        </Container>
+      </Box>
     </div>
   );
 };

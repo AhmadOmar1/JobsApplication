@@ -1,0 +1,128 @@
+.container {
+  padding: 16px 32px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.logoutButton {
+  border-radius: 8px;
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.postJobButton {
+  margin-bottom: 1.2rem !important;
+  width: 100%;
+}
+
+.paper {
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.tableHeader {
+  font-weight: bold;
+  color: #000;
+  background-color: #e0e0e0;
+}
+
+.tableCell {
+  font-size: 1rem;
+  color: #555;
+}
+
+.tableRow {
+  font-weight: medium;
+}
+
+.statusFilter {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+  gap: 16px;
+}
+
+.filterForm {
+  min-width: 200px;
+}
+
+.filterSelect {
+  border-radius: 8px;
+}
+
+.responsiveLayout {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.applicationCard {
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.applicationDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.applicationActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.tableLayout {
+  padding: 8px;
+  border-radius: 8px;
+  overflow-x: auto;
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .header {
+    flex-direction: row;
+  }
+
+  .title {
+    font-size: 2rem;
+    text-align: left;
+  }
+
+  .logoutButton {
+    width: auto;
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+
+  .postJobButton {
+    width: auto;
+  }
+
+  .responsiveLayout {
+    display: none;
+  }
+
+  .tableLayout {
+    display: block;
+  }
+}
