@@ -4,7 +4,11 @@ export interface IJob {
   company: string;
   location: string;
   salary: string;
-  type: "Full-time" | "Part-time" | "Contract" | "Remote";
+  type: JobType;
   description: string;
-  deadline: string; 
+  deadline: string;
 }
+
+export type JobType = "Full-time" | "Part-time" | "Contract" | "Remote";
+
+export type ICardJob = Omit<IJob, "description" | "deadline">;
