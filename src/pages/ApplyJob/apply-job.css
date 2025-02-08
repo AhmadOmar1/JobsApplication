@@ -1,0 +1,31 @@
+
+.submit-button {
+  background-color: #7a92cf;  
+   color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:hover {
+  background-color: #7a92cf; 
+  cursor: pointer;
+}
+
+
+.cancel-button {
+  background-color: transparent;
+  border: 2px solid #7a92cf;  
+  color: wheat;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #7a92cf;
+  color: white;  
+  cursor: pointer;
+}

@@ -1,4 +1,3 @@
-import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -7,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { ICardJob } from '../../types/jobTypes';
 
-const JobCard: React.FC<ICardJob> = ({ id, title, company, location, salary, type }) => {
+const JobCard = ({ id, title, company, location, salary, type }: ICardJob) => {
     const navigate = useNavigate();
 
     const handleViewDetails = () => {
