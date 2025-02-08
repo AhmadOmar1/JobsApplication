@@ -7,7 +7,15 @@ interface FilterProps {
   onJobTypeChange: (jobType: JobType) => void;
 }
 
-const JobFilter: React.FC<FilterProps> = ({ onFilterChange, onJobTypeChange }) => {
+const JobFilter = ({ onFilterChange, onJobTypeChange }: FilterProps) => {
+  const [jobType, setJobType] = React.useState<JobType | ''>('');  
+
+  const handleJobTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedJobType = e.target.value as JobType;
+    setJobType(selectedJobType); 
+    onJobTypeChange(selectedJobType);  
+  };
+
   return (
     <Box sx={{
       display: 'flex',
@@ -26,14 +34,15 @@ const JobFilter: React.FC<FilterProps> = ({ onFilterChange, onJobTypeChange }) =
           select
           label="Job Type"
           variant="filled"
-          onChange={(e) => onJobTypeChange(e.target.value as JobType)}
+          value={jobType}  
+          onChange={handleJobTypeChange} 
           sx={{
             width: 150,
             backgroundColor: '#f5f5f5',
             borderRadius: 2,
           }}
           InputProps={{
-            disableUnderline: true, // <== added this
+            disableUnderline: true, 
           }}
         >
           <MenuItem value="">All</MenuItem>
@@ -60,7 +69,7 @@ const JobFilter: React.FC<FilterProps> = ({ onFilterChange, onJobTypeChange }) =
           sx={{ backgroundColor: 'white', borderRadius: 2 }}
           onChange={(e) => onFilterChange(e.target.value)}
           InputProps={{
-            disableUnderline: true, // <== added this
+            disableUnderline: true, 
           }}
         />
         <Button
@@ -70,9 +79,7 @@ const JobFilter: React.FC<FilterProps> = ({ onFilterChange, onJobTypeChange }) =
             fontWeight: 'bold',
             borderRadius: 2,
             backgroundColor: '#f5f5f5',
-            '&:hover': { backgroundColor: '#4C708A',
-               color: 'white'
-             },
+            '&:hover': { backgroundColor: '#4C708A', color: 'white' },
           }}
         >
           Search
