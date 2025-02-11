@@ -2,7 +2,6 @@
   display: flex;
   height: 100vh;
   overflow: hidden;
-  font-family: "Poppins", sans-serif;
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
 }
 

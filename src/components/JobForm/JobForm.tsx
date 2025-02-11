@@ -12,6 +12,7 @@ import {
 import { IJob } from "../../types/jobTypes";
 import { validateField, validateForm } from "../../utils/validation";
 import styles from "./job-form.module.css";
+
 const jobTypes: IJob["type"][] = [
   "Full-time",
   "Part-time",
@@ -32,6 +33,9 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
     type: "Full-time",
     description: "",
     deadline: "",
+    qualifications: [],
+    requirements: [],
+    postedAt: "",
   });
 
   const [errors, setErrors] = useState<
@@ -47,29 +51,34 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
     };
 
     if (name === "salary") {
-      if (value === "") {
-        setJobData((prev) => ({
-          ...prev,
-          salary: "",
-        }));
-        return;
-      }
-
       const numericValue = value.replace(/\D/g, "");
-      if (!isNaN(Number(numericValue))) {
-        setJobData((prev) => ({
-          ...prev,
-          salary: `${numericValue}$`,
-        }));
-      }
+      setJobData((prev) => ({
+        ...prev,
+        salary: numericValue,
+      }));
+
+      const error = validateField(name, numericValue);
+      setErrors((prev) => ({ ...prev, [name]: error }));
     } else {
       setJobData((prev) => ({ ...prev, [name]: value }));
-    }
 
-    if (name !== "salary") {
       const error = validateField(name, value);
       setErrors((prev) => ({ ...prev, [name]: error }));
     }
+  };
+
+  const handleQualificationsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const values = e.target.value.split(",").map((q) => q.trim());
+    setJobData((prev) => ({ ...prev, qualifications: values }));
+    setErrors((prev) => ({ ...prev, qualifications: undefined }));
+  };
+
+  const handleRequirementsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const values = e.target.value.split(",").map((r) => r.trim());
+    setJobData((prev) => ({ ...prev, requirements: values }));
+    setErrors((prev) => ({ ...prev, requirements: undefined }));
   };
 
   const handleTypeChange = (e: SelectChangeEvent<IJob["type"]>) => {
@@ -86,8 +95,7 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
-      const jobDataToStore = { ...jobData };
-      onSubmit(jobDataToStore);
+      onSubmit(jobData);
     }
   };
 
@@ -126,17 +134,13 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
       <TextField
         label="Salary"
         name="salary"
-        value={jobData.salary}
+        value={jobData.salary ? `${jobData.salary}$` : ""}
         onChange={handleChange}
         error={!!errors.salary}
         helperText={errors.salary}
         required
         className={styles.textField}
         slotProps={{
-          htmlInput: {
-            inputMode: "numeric",
-            min: "0",
-          },
           input: {
             startAdornment: <InputAdornment position="start">$</InputAdornment>,
           },
@@ -163,6 +167,44 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         rows={4}
         className={styles.textField}
       />
+
+      <TextField
+        label="Qualifications (comma separated)"
+        name="qualifications"
+        value={jobData.qualifications.join(", ")}
+        onChange={handleQualificationsChange}
+        error={!!errors.qualifications}
+        helperText={errors.qualifications}
+        required
+        className={styles.textField}
+      />
+
+      <TextField
+        label="Requirements (comma separated)"
+        name="requirements"
+        value={jobData.requirements.join(", ")}
+        onChange={handleRequirementsChange}
+        error={!!errors.requirements}
+        helperText={errors.requirements}
+        required
+        className={styles.textField}
+      />
+
+      <TextField
+        label="Posted At"
+        name="postedAt"
+        type="date"
+        value={jobData.postedAt}
+        onChange={handleChange}
+        error={!!errors.postedAt}
+        helperText={errors.postedAt}
+        required
+        className={styles.textField}
+        slotProps={{
+          inputLabel: { shrink: true },
+        }}
+      />
+
       <TextField
         label="Deadline"
         name="deadline"
@@ -173,7 +215,9 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         helperText={errors.deadline}
         required
         className={styles.textField}
-        slotProps={{ inputLabel: { shrink: true } }}
+        slotProps={{
+          inputLabel: { shrink: true },
+        }}
       />
       <Button
         type="submit"

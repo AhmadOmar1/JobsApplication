@@ -1,0 +1,444 @@
+[
+  {
+    "id": "1",
+    "title": "Software Engineer",
+    "postedAt": "2025-03-01",
+    "company": "Tech Corp",
+    "location": "San Francisco, CA",
+    "salary": "$120,000",
+    "type": "Full-time",
+    "description": "Develop and maintain scalable software solutions for enterprise clients.",
+    "qualifications": [
+      "Bachelor's degree in Computer Science or related field",
+      "3+ years of experience in software development",
+      "Proficiency in JavaScript, React, and Node.js"
+    ],
+    "requirements": [
+      "Ability to work in a fast-paced environment",
+      "Strong problem-solving skills",
+      "Excellent teamwork and communication skills"
+    ],
+    "deadline": "2025-05-31"
+  },
+  {
+    "id": "2",
+    "title": "Product Manager",
+    "postedAt": "2025-02-01",
+    "company": "Innovate Inc",
+    "location": "New York, NY",
+    "salary": "$130,000",
+    "type": "Contract",
+    "description": "Lead cross-functional teams to design, build, and roll out innovative products.",
+    "qualifications": [
+      "Bachelor’s or Master’s degree in Business Administration or related field",
+      "5+ years of experience in product management",
+      "Strong analytical and leadership skills"
+    ],
+    "requirements": [
+      "Excellent communication skills",
+      "Experience with Agile methodologies",
+      "Ability to work with engineering and design teams"
+    ],
+    "deadline": "2025-04-30"
+  },
+  {
+    "id": "3",
+    "title": "Data Scientist",
+    "postedAt": "2025-05-15",
+    "company": "DataWorks",
+    "location": "Remote",
+    "salary": "$110,000",
+    "type": "Remote",
+    "description": "Analyze complex datasets to derive meaningful business insights.",
+    "qualifications": [
+      "Master’s degree in Data Science, Statistics, or related field",
+      "3+ years of experience in data analysis",
+      "Proficiency in Python, R, and SQL"
+    ],
+    "requirements": [
+      "Experience with machine learning techniques",
+      "Ability to work with large datasets",
+      "Strong analytical and problem-solving skills"
+    ],
+    "deadline": "2025-06-15"
+  },
+  {
+    "id": "4",
+    "title": "UX Designer",
+    "postedAt": "2025-04-20",
+    "company": "Creative Labs",
+    "location": "Los Angeles, CA",
+    "salary": "$90,000",
+    "type": "Part-time",
+    "description": "Create engaging and intuitive user experiences for web and mobile applications.",
+    "qualifications": [
+      "Bachelor’s degree in Design, Human-Computer Interaction, or related field",
+      "2+ years of experience in UX/UI design",
+      "Proficiency in Figma, Adobe XD, and Sketch"
+    ],
+    "requirements": [
+      "Strong understanding of user-centered design",
+      "Ability to conduct usability testing",
+      "Experience in wireframe and prototyping"
+    ],
+    "deadline": "2025-06-01"
+  },
+  {
+    "id": "5",
+    "title": "Cyber Security Analyst",
+    "postedAt": "2025-04-15",
+    "company": "SecureTech",
+    "location": "Chicago, IL",
+    "salary": "$100,000",
+    "type": "Full-time",
+    "description": "Monitor and protect company networks against cyber threats.",
+    "qualifications": [
+      "Bachelor’s degree in Cyber Security or related field",
+      "3+ years of experience in cybersecurity",
+      "Certified Ethical Hacker (CEH) or CRISPS certification"
+    ],
+    "requirements": [
+      "Experience in penetration testing",
+      "Knowledge of security frameworks (ISO 27001, NIST)",
+      "Ability to respond to security incidents quickly"
+    ],
+    "deadline": "2025-05-20"
+  },
+  {
+    "id": "6",
+    "title": "Marketing Manager",
+    "postedAt": "2025-05-15",
+    "company": "Branding Co",
+    "location": "Miami, FL",
+    "salary": "$95,000",
+    "type": "Contract",
+    "description": "Develop and execute strategic marketing campaigns for global brands.",
+    "qualifications": [
+      "Bachelor’s degree in Marketing, Business, or related field",
+      "5+ years of experience in digital marketing",
+      "Expertise in SEO, PPC, and social media marketing"
+    ],
+    "requirements": [
+      "Strong analytical skills",
+      "Experience in A/B testing",
+      "Ability to manage multiple campaigns"
+    ],
+    "deadline": "2025-06-05"
+  },
+  {
+    "id": "7",
+    "title": "AI Engineer",
+    "postedAt": "2025-06-5",
+    "company": "AI Innovations",
+    "location": "Boston, MA",
+    "salary": "$130,000",
+    "type": "Full-time",
+    "description": "Build and optimize AI models to improve business processes.",
+    "qualifications": [
+      "Master’s degree in AI, Computer Science, or related field",
+      "3+ years of experience in machine learning",
+      "Proficiency in TensorFlow, PyTorch, and NLP"
+    ],
+    "requirements": [
+      "Ability to optimize deep learning models",
+      "Experience with cloud AI platforms",
+      "Strong mathematical and analytical skills"
+    ],
+    "deadline": "2025-07-10"
+  },
+  {
+    "id": "8",
+    "title": "HR Specialist",
+    "postedAt": "2025-07-25",
+    "company": "People Corp",
+    "location": "Denver, CO",
+    "salary": "$70,000",
+    "type": "Part-time",
+    "description": "Manage hiring processes and employee relations.",
+    "qualifications": [
+      "Bachelor’s degree in Human Resources or Business",
+      "3+ years of experience in HR",
+      "Knowledge of labor laws and HR best practices"
+    ],
+    "requirements": [
+      "Excellent communication skills",
+      "Ability to handle employee disputes",
+      "Experience with HR software"
+    ],
+    "deadline": "2025-09-28"
+  },
+  {
+    "id": "9",
+    "title": "Business Analyst",
+    "postedAt": "2025-07-01",
+    "company": "Strategy Solutions",
+    "location": "Seattle, WA",
+    "salary": "$85,000",
+    "type": "Full-time",
+    "description": "Analyze business processes and suggest improvements.",
+    "qualifications": [
+      "Bachelor’s degree in Business, Finance, or related field",
+      "2+ years of experience in business analysis",
+      "Proficiency in SQL and Excel"
+    ],
+    "requirements": [
+      "Strong problem-solving skills",
+      "Experience with data visualization tools",
+      "Ability to communicate with stakeholders"
+    ],
+    "deadline": "2025-08-22"
+  },
+  {
+    "id": "10",
+    "title": "Graphic Designer",
+    "postedAt": "2025-06-28",
+    "company": "Design Studio",
+    "location": "Portland, OR",
+    "salary": "$75,000",
+    "type": "Remote",
+    "description": "Design engaging visual content for various media platforms.",
+    "qualifications": [
+      "Bachelor’s degree in Graphic Design or related field",
+      "3+ years of experience in digital design",
+      "Proficiency in Adobe Creative Suite"
+    ],
+    "requirements": [
+      "Strong portfolio of past work",
+      "Experience in branding and advertising",
+      "Ability to work under tight deadlines"
+    ],
+    "deadline": "2025-07-18"
+  },
+
+  {
+    "id": "11",
+    "title": "DevOps Engineer",
+    "postedAt": "2025-10-06",
+    "company": "CloudTech",
+    "location": "Austin, TX",
+    "salary": "$115,000",
+    "type": "Full-time",
+    "description": "Manage and optimize cloud infrastructure for high-availability systems.",
+    "qualifications": [
+      "Bachelor’s degree in Computer Science or related field",
+      "3+ years of experience in DevOps",
+      "Proficiency in AWS, Docker, and Kubernetes"
+    ],
+    "requirements": [
+      "Experience with CI/CD pipelines",
+      "Knowledge of scripting languages (Python, Bash)",
+      "Ability to troubleshoot infrastructure issues"
+    ],
+    "deadline": "2025-11-15"
+  },
+  {
+    "id": "12",
+    "title": "Financial Analyst",
+    "postedAt": "2025-08-15",
+    "company": "FinancePro",
+    "location": "Charlotte, NC",
+    "salary": "$80,000",
+    "type": "Full-time",
+    "description": "Analyze financial data to support business decision-making.",
+    "qualifications": [
+      "Bachelor’s degree in Finance, Accounting, or related field",
+      "2+ years of experience in financial analysis",
+      "Proficiency in Excel and financial modeling"
+    ],
+    "requirements": [
+      "Strong analytical skills",
+      "Experience with financial software (e.g., SAP)",
+      "Ability to present complex data clearly"
+    ],
+    "deadline": "2025-10-25"
+  },
+  {
+    "id": "13",
+    "title": "Content Writer",
+    "postedAt": "2025-07-20",
+    "company": "Creative Minds",
+    "location": "Remote",
+    "salary": "$60,000",
+    "type": "Remote",
+    "description": "Create engaging content for blogs, websites, and social media.",
+    "qualifications": [
+      "Bachelor’s degree in English, Journalism, or related field",
+      "2+ years of experience in content writing",
+      "Excellent writing and editing skills"
+    ],
+    "requirements": [
+      "Experience with SEO best practices",
+      "Ability to meet tight deadlines",
+      "Strong research skills"
+    ],
+    "deadline": "2025-09-30"
+  },
+  {
+    "id": "14",
+    "title": "Sales Manager",
+    "postedAt": "2025-08-22",
+    "company": "SalesForce Inc",
+    "location": "Dallas, TX",
+    "salary": "$90,000",
+    "type": "Full-time",
+    "description": "Lead a sales team to achieve revenue targets.",
+    "qualifications": [
+      "Bachelor’s degree in Business or Marketing",
+      "5+ years of experience in sales",
+      "Proven track record of meeting sales goals"
+    ],
+    "requirements": [
+      "Strong leadership skills",
+      "Experience with CRM software",
+      "Excellent negotiation skills"
+    ],
+    "deadline": "2025-11-10"
+  },
+  {
+    "id": "15",
+    "title": "Mobile App Developer",
+    "postedAt": "2025-02-14",
+    "company": "AppWorks",
+    "location": "San Diego, CA",
+    "salary": "$100,000",
+    "type": "Contract",
+    "description": "Develop and maintain mobile applications for iOS and Android.",
+    "qualifications": [
+      "Bachelor’s degree in Computer Science or related field",
+      "3+ years of experience in mobile app development",
+      "Proficiency in Swift, Kotlin, and React Native"
+    ],
+    "requirements": [
+      "Experience with RESTful APIs",
+      "Strong understanding of UI/UX principles",
+      "Ability to work in an Agile environment"
+    ],
+    "deadline": "2025-04-05"
+  },
+  {
+    "id": "16",
+    "title": "Network Engineer",
+    "postedAt": "2025-09-02",
+    "company": "NetSolutions",
+    "location": "Atlanta, GA",
+    "salary": "$95,000",
+    "type": "Full-time",
+    "description": "Design and maintain network infrastructure for enterprise clients.",
+    "qualifications": [
+      "Bachelor’s degree in Network Engineering or related field",
+      "3+ years of experience in network administration",
+      "Certifications: CCNA, CCNP"
+    ],
+    "requirements": [
+      "Experience with Cisco and Juniper devices",
+      "Knowledge of network security protocols",
+      "Ability to troubleshoot network issues"
+    ],
+    "deadline": "2025-10-12"
+  },
+  {
+    "id": "17",
+    "title": "Customer Support Specialist",
+    "postedAt": "2025-07-17",
+    "company": "Supportify",
+    "location": "Remote",
+    "salary": "$50,000",
+    "type": "Remote",
+    "description": "Provide exceptional customer support via chat, email, and phone.",
+    "qualifications": [
+      "High school diploma or equivalent",
+      "1+ years of experience in customer support",
+      "Excellent communication skills"
+    ],
+    "requirements": [
+      "Ability to handle customer complaints",
+      "Experience with Zendesk or similar tools",
+      "Patience and empathy"
+    ],
+    "deadline": "2025-09-25"
+  },
+  {
+    "id": "18",
+    "title": "Project Manager",
+    "postedAt": "2025-02-20",
+    "company": "PlanIt Solutions",
+    "location": "Phoenix, AZ",
+    "salary": "$110,000",
+    "type": "Full-time",
+    "description": "Oversee projects from initiation to completion, ensuring timely delivery.",
+    "qualifications": [
+      "Bachelor’s degree in Business or related field",
+      "5+ years of experience in project management",
+      "PMP certification preferred"
+    ],
+    "requirements": [
+      "Experience with project management tools (e.g., Jira, Trello)",
+      "Strong organizational skills",
+      "Ability to manage cross-functional teams"
+    ],
+    "deadline": "2025-08-20"
+  },
+  {
+    "id": "19",
+    "title": "Quality Assurance Engineer",
+    "postedAt": "2025-07-30",
+    "company": "Testify Labs",
+    "location": "Raleigh, NC",
+    "salary": "$85,000",
+    "type": "Full-time",
+    "description": "Ensure the quality of software products through rigorous testing.",
+    "qualifications": [
+      "Bachelor’s degree in Computer Science or related field",
+      "2+ years of experience in QA",
+      "Proficiency in automated testing tools (e.g., Selenium)"
+    ],
+    "requirements": [
+      "Experience with manual and automated testing",
+      "Knowledge of bug tracking tools",
+      "Attention to detail"
+    ],
+    "deadline": "2025-09-30"
+  },
+  {
+    "id": "20",
+    "title": "Social Media Manager",
+    "postedAt": "2025-06-08",
+    "company": "BuzzMedia",
+    "location": "Chicago, IL",
+    "salary": "$65,000",
+    "type": "Part-time",
+    "description": "Manage and grow social media accounts for clients.",
+    "qualifications": [
+      "Bachelor’s degree in Marketing or related field",
+      "2+ years of experience in social media management",
+      "Proficiency in Facebook Ads, Instagram, and Twitter"
+    ],
+    "requirements": [
+      "Experience with analytics tools",
+      "Creative content creation skills",
+      "Ability to engage with online communities"
+    ],
+    "deadline": "2025-06-08"
+  },
+  {
+    "id": "21",
+    "title": "Frontend Developer",
+    "postedAt": "2025-11-20",
+    "company": "WebMasters",
+    "location": "Toronto, Canada",
+    "salary": "$105,000",
+    "type": "Full-time",
+    "description": "Develop responsive and user-friendly web interfaces using modern technologies.",
+    "qualifications": [
+      "Bachelor’s degree in Computer Science or related field",
+      "3+ years of experience in frontend development",
+      "Proficiency in React, TypeScript, and CSS-in-JS"
+    ],
+    "requirements": [
+      "Experience with state management (Redux/MobX)",
+      "Knowledge of Webpack/Vite",
+      "Familiarity with RESTful APIs"
+    ],
+    "deadline": "2025-12-01"
+  }
+]

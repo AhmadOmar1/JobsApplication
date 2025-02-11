@@ -7,8 +7,14 @@ export interface IJob {
   type: JobType;
   description: string;
   deadline: string;
+  qualifications: string[];
+  requirements: string[];
+  postedAt: string;
 }
 
 export type JobType = "Full-time" | "Part-time" | "Contract" | "Remote";
 
-export type ICardJob = Omit<IJob, "description" | "deadline">;
+export type ICardJob = Omit<
+  IJob,
+  "description" | "deadline" | "qualifications" | "requirements"
+>;

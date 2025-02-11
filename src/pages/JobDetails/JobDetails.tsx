@@ -1,64 +1,105 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Typography, Button } from '@mui/material';
-import './JobDetails.css';
+import { useParams, useNavigate } from "react-router-dom";
+import { Box, Typography, Button, List, ListItem } from "@mui/material";
+import { useAuth } from "../../hooks/useAuth";
+import { useJobs } from "../../hooks/useJobs";
 
 const JobDetails = () => {
-  const { jobId } = useParams<{ jobId: string }>(); 
-  const navigate = useNavigate();  
+  const { jobId } = useParams<{ jobId: string }>();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { jobs } = useJobs();
 
-  const fakeJobs = [
-    { id: '1', title: 'Software Engineer', Responsibilities: 'Design, develop, and maintain software', RequiredSkills: 'Programming, problem-solving, analysis.', Qualifications: 'Degree in Computer Science or related field', Tools: 'Programming languages like Python, Java, C++' },
-    { id: '2', title: 'Product Manager', Responsibilities: 'Manage product development from ideation to execution', RequiredSkills: 'Strategic planning, communication, team management', Qualifications: 'Background in business or engineering', Tools: 'Project management tools like Jira, Asana' },
-    { id: '3', title: 'Data Scientist', Responsibilities: 'Analyze data and extract actionable insights', RequiredSkills: 'Data analysis, machine learning, statistics.', Qualifications: 'Degree in Data Science, Mathematics, or related field', Tools: 'Python, R, SQL, Machine Learning tools' },
-
-  ];
-
-  const job = fakeJobs.find((job) => job.id === jobId);
+  const job = jobs.find((job) => job.id === jobId);
 
   if (!job) {
-    return <Typography variant="h5">Job not found</Typography>;
+    return (
+      <Box sx={{ padding: 3, textAlign: "center" }}>
+        <Typography variant="h5" color="error">
+          Job not found
+        </Typography>
+      </Box>
+    );
   }
 
-  const handleApplyClick = () => {
-    navigate(`/apply/${jobId}`);  
-  };
-
-  const handleCancelClick = () => {
-    navigate(-1);  
-  };
-
   return (
-    <Box className="job-details-container"> 
-      <Box className="job-details-box">
-        <Typography className="job-details-title">{job.title}</Typography> 
-        <Typography className="job-details-Responsibilities"> <strong>Responsibilities:</strong> {job.Responsibilities}</Typography>
-        <Typography className="job-details-RequiredSkills"><strong>Required Skills:</strong> {job.RequiredSkills}</Typography>
-        <Typography className="job-details-Tools"><strong>Tools:</strong> {job.Tools}</Typography>
+    <Box
+      sx={{
+        padding: 4,
+        maxWidth: 800,
+        margin: "auto",
+        backgroundColor: "#f9f9f9",
+        borderRadius: 2,
+        boxShadow: 2,
+      }}
+    >
+      <Typography variant="h3" sx={{ fontWeight: "bold", marginBottom: 2 }}>
+        {job.title}
+      </Typography>
 
-        <Box className="job-details-buttons-container">
-          <Button 
-            className="job-details-button" 
-            variant="contained" 
-            onClick={handleApplyClick}
-            sx={{
-              backgroundColor: '#7a92cf', 
-              color: 'white',
-              '&:hover': {
-                backgroundColor: '#6a82b6', 
-              }
-            }}
-          >
-            Apply
-          </Button>
-          <Button 
-            className="job-details-button-cancel" 
-            variant="outlined" 
-            onClick={handleCancelClick}
-          >
-            Cancel
-          </Button>
-        </Box>
-      </Box>
+      <Typography variant="h6" color="textSecondary" sx={{ marginBottom: 2 }}>
+        <strong>Company:</strong> {job.company}
+      </Typography>
+
+      <Typography variant="h6" color="textSecondary">
+        <strong>Location:</strong> {job.location}
+      </Typography>
+
+      <Typography variant="h6" color="textSecondary">
+        <strong>Salary:</strong> {job.salary}
+      </Typography>
+
+      <Typography variant="h6" color="textSecondary">
+        <strong>Type:</strong> {job.type}
+      </Typography>
+
+      <Typography variant="h6" color="textSecondary">
+        <strong>Posted At:</strong>{" "}
+        {new Date(job.postedAt).toLocaleDateString()}
+      </Typography>
+
+      <Typography variant="h6" color="textSecondary">
+        <strong>Deadline:</strong> {job.deadline}
+      </Typography>
+
+      <Typography variant="h5" sx={{ marginTop: 3, fontWeight: "bold" }}>
+        Job Description:
+      </Typography>
+      <Typography variant="body1" sx={{ marginBottom: 3 }}>
+        {job.description}
+      </Typography>
+
+      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+        Qualifications:
+      </Typography>
+      <List sx={{ marginBottom: 3 }}>
+        {job.qualifications.map((qualification, index) => (
+          <ListItem key={index} sx={{ pl: 0 }}>
+            ✅ {qualification}
+          </ListItem>
+        ))}
+      </List>
+
+      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+        Requirements:
+      </Typography>
+      <List sx={{ marginBottom: 3 }}>
+        {job.requirements.map((requirement, index) => (
+          <ListItem key={index} sx={{ pl: 0 }}>
+            🔹 {requirement}
+          </ListItem>
+        ))}
+      </List>
+
+      {!isAuthenticated && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate(`/apply/${job.id}`)}
+          sx={{ mt: 2, width: "100%" }}
+        >
+          Apply Now
+        </Button>
+      )}
     </Box>
   );
 };
