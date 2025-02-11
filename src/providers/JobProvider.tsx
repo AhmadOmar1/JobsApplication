@@ -1,22 +1,41 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
-import { IJob } from "../types/jobTypes";
+import { IJob, JobType } from "../types/jobTypes";
+import jobsData from "../data/jobs.json";
 import {
   getJobsFromLocalStorage,
   setJobsInLocalStorage,
 } from "../utils/localStorage";
 
-interface IJobContext {
+interface JobContextType {
   jobs: IJob[];
   setJobs: (jobs: IJob[]) => void;
 }
 
-export const JobContext = createContext<IJobContext | null>(null);
+export const JobContext = createContext<JobContextType | null>(null);
 
 export const JobProvider = ({ children }: { children: ReactNode }) => {
-  const [jobs, setJobs] = useState<IJob[]>(() => getJobsFromLocalStorage());
+  const [jobs, setJobs] = useState<IJob[]>([]);
+
+ useEffect(() => {
+   const storedJobs = getJobsFromLocalStorage();
+   if (storedJobs.length > 0) {
+     setJobs(storedJobs);
+   } else {
+    const formattedJobs: IJob[] = jobsData.map((job) => ({
+      ...job,
+      type: job.type as JobType,
+      postedAt: job.postedAt || new Date().toISOString(),
+    }));
+
+     setJobs(formattedJobs);
+     setJobsInLocalStorage(formattedJobs);
+   }
+ }, []);
 
   useEffect(() => {
-    setJobsInLocalStorage(jobs);
+    if (jobs.length > 0) {
+      setJobsInLocalStorage(jobs);
+    }
   }, [jobs]);
 
   return (

@@ -2,14 +2,6 @@
   padding: 2rem;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
 
 .button {
   width: 100%;
@@ -27,6 +19,3 @@
   margin: auto;
 }
 
-.title {
-  margin-bottom: 1rem;
-}

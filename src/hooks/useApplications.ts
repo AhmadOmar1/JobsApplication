@@ -1,5 +1,9 @@
 import { useContext } from "react";
 import { ApplicationContext } from "../providers/ApplicationProvider";
+import {
+  setApplicationsInLocalStorage,
+} from "../utils/localStorage";
+import { IApplication } from "../types/applicationTypes";
 
 export const useApplications = () => {
   const context = useContext(ApplicationContext);
@@ -12,5 +16,15 @@ export const useApplications = () => {
 
   const { applications, addApplication, updateApplicationStatus } = context;
 
-  return { applications, addApplication, updateApplicationStatus };
+  const addNewApplication = (newApplication: IApplication) => {
+    const updatedApplications = [...applications, newApplication];
+    setApplicationsInLocalStorage(updatedApplications);
+    addApplication(newApplication);
+  };
+
+  return {
+    applications,
+    addApplication: addNewApplication,
+    updateApplicationStatus,
+  };
 };

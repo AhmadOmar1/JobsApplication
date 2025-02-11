@@ -3,6 +3,7 @@ import { getAuthStatus, setAuthStatus } from "../utils/localStorage";
 
 interface IAuthContextType {
   isAuthenticated: boolean;
+  isAdmin: boolean;
   login: (email: string, password: string) => string | null;
   logout: () => void;
 }
@@ -13,15 +14,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() =>
     getAuthStatus()
   );
+  const [isAdmin, setIsAdmin] = useState<boolean>(
+    () => localStorage.getItem("isAdmin") === "true"
+  );
 
   useEffect(() => {
     setIsAuthenticated(getAuthStatus());
+    setIsAdmin(localStorage.getItem("isAdmin") === "true");
   }, []);
 
   const login = (email: string, password: string) => {
     if (email === "admin@admin" && password === "admin") {
       setAuthStatus(true);
       setIsAuthenticated(true);
+      setIsAdmin(true);
+      localStorage.setItem("isAdmin", "true");
+      return null;
+    } else if (email === "user@user" && password === "user") {
+      setAuthStatus(true);
+      setIsAuthenticated(true);
+      setIsAdmin(false);
+      localStorage.setItem("isAdmin", "false");
       return null;
     }
     return "Invalid email or password";
@@ -30,10 +43,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setAuthStatus(false);
     setIsAuthenticated(false);
+    setIsAdmin(false);
+    localStorage.removeItem("isAdmin");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isAdmin, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

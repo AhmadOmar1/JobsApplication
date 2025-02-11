@@ -3,12 +3,11 @@ import { AuthContext } from "../providers/AuthProvider";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
-  const { isAuthenticated, login, logout } = context;
+  const { isAuthenticated, isAdmin, login, logout } = context;
 
-  return { isAuthenticated, login, logout };
+  return { isAuthenticated, isAdmin, login, logout };
 };

@@ -1,8 +1,4 @@
-import { useContext, useState } from "react";
-import { useApplications } from "../../hooks/useApplications";
-import { useJobs } from "../../hooks/useJobs";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../providers/AuthProvider";
+import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -11,30 +7,49 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Paper,
   Button,
   Select,
   MenuItem,
   FormControl,
-  Paper,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import styles from "./AdminDashboard.module.css"; // استيراد ملف CSS
+import { useApplications } from "../../hooks/useApplications";
+import { useJobs } from "../../hooks/useJobs";
+import { getApplicationsFromLocalStorage } from "../../utils/localStorage";
 
 const AdminDashboard = () => {
   const { applications, updateApplicationStatus } = useApplications();
   const { jobs } = useJobs();
-  const authContext = useContext(AuthContext);
-  const navigate = useNavigate();
+  const [filterStatus, setFilterStatus] = useState("All");
+  const [messages, setMessages] = useState<
+    { id: string; name: string; email: string; message: string }[]
+  >([]);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [filterStatus, setFilterStatus] = useState<
-    "All" | "Pending" | "Reviewed" | "Rejected"
-  >("All");
+  const [localApplications, setLocalApplications] = useState(applications);
 
-  const jobTitleMap = jobs.reduce((map, job) => {
-    map[job.id] = job.title;
-    return map;
-  }, {} as Record<string, string>);
+  useEffect(() => {
+    const storedApplications = getApplicationsFromLocalStorage();
+    setLocalApplications(storedApplications);
+  }, [applications]);
 
-  const jobApplicationCount = applications.reduce((countMap, app) => {
+  useEffect(() => {
+    const storedMessages = JSON.parse(
+      localStorage.getItem("contactMessages") || "[]"
+    );
+    setMessages(storedMessages);
+  }, []);
+
+  const deleteMessage = (id: string) => {
+    const updatedMessages = messages.filter((msg) => msg.id !== id);
+    setMessages(updatedMessages);
+    localStorage.setItem("contactMessages", JSON.stringify(updatedMessages));
+  };
+
+  const jobApplicationCount = localApplications.reduce((countMap, app) => {
     countMap[app.jobId] = (countMap[app.jobId] || 0) + 1;
     return countMap;
   }, {} as Record<string, number>);
@@ -42,79 +57,50 @@ const AdminDashboard = () => {
   const jobsWithApplications = jobs.filter(
     (job) => jobApplicationCount[job.id]
   );
-
-  const handleLogout = () => {
-    authContext?.logout();
-    navigate("/admin/login");
-  };
-
+  
   return (
-    <Box className={styles.container}>
-      <Box className={styles.header}>
-        <Typography variant="h4" gutterBottom className={styles.title}>
-          Admin Dashboard
-        </Typography>
-        <Button
-          onClick={handleLogout}
-          variant="contained"
-          color="secondary"
-          className={styles.logoutButton}
-        >
-          Logout
-        </Button>
-      </Box>
-
-      <Button
-        onClick={() => navigate("/admin/post-job")}
-        variant="contained"
-        color="success"
-        className={styles.postJobButton}
-      >
-        ➕ Post New Job
-      </Button>
+    <Box sx={{ padding: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        Admin Dashboard
+      </Typography>
 
       {jobsWithApplications.length > 0 && (
-        <Paper className={styles.paper}>
+        <Paper sx={{ padding: 2, marginBottom: 3 }}>
           <Typography variant="h6" gutterBottom>
             📊 Total Applications Per Job
           </Typography>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align="left" className={styles.tableHeader}>
-                  Job Title
-                </TableCell>
-                <TableCell align="center" className={styles.tableHeader}>
-                  Total Applications
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {jobsWithApplications.map((job) => (
-                <TableRow key={job.id}>
-                  <TableCell align="left" className={styles.tableRow}>
-                    {job.title}
-                  </TableCell>
-                  <TableCell align="center" className={styles.tableCell}>
-                    {jobApplicationCount[job.id]}
-                  </TableCell>
+          <Box sx={{ overflowX: "auto" }}>
+            <Table sx={{ minWidth: 290 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Job Title</TableCell>
+                  <TableCell align="center">Total Applications</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {jobsWithApplications.map((job) => (
+                  <TableRow key={job.id}>
+                    <TableCell>{job.title}</TableCell>
+                    <TableCell align="center">
+                      {jobApplicationCount[job.id]}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
         </Paper>
       )}
 
-      <Box className={styles.statusFilter}>
-        <FormControl className={styles.filterForm}>
+      
+      <Paper sx={{ padding: 2, marginBottom: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          📄 Job Applications
+        </Typography>
+        <FormControl sx={{ minWidth: 200, marginBottom: 2 }}>
           <Select
             value={filterStatus}
-            onChange={(e) =>
-              setFilterStatus(
-                e.target.value as "All" | "Pending" | "Reviewed" | "Rejected"
-              )
-            }
-            className={styles.filterSelect}
+            onChange={(e) => setFilterStatus(e.target.value)}
           >
             <MenuItem value="All">All Applications</MenuItem>
             <MenuItem value="Pending">Pending</MenuItem>
@@ -122,130 +108,268 @@ const AdminDashboard = () => {
             <MenuItem value="Rejected">Rejected</MenuItem>
           </Select>
         </FormControl>
-      </Box>
 
-      {/* Responsive Layout for Small Screens */}
-      <Box className={styles.responsiveLayout}>
-        {applications
-          .filter(
-            (app) => filterStatus === "All" || app.status === filterStatus
-          )
-          .map((app) => (
-            <Paper key={app.id} className={styles.applicationCard}>
-              <Box className={styles.applicationDetails}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  {app.name}
-                </Typography>
-                <Typography variant="body2">Email: {app.email}</Typography>
-                <Typography variant="body2">
-                  Phone: {app.phone || "N/A"}
-                </Typography>
-                <Typography variant="body2">
-                  Job Title: {jobTitleMap[app.jobId] || "Unknown Job"}
-                </Typography>
-                <Typography variant="body2">Status: {app.status}</Typography>
-                <Box className={styles.applicationActions}>
-                  <Button
-                    onClick={() => updateApplicationStatus(app.id, "Reviewed")}
-                    variant="contained"
-                    color="primary"
-                  >
-                    ✅ Reviewed
-                  </Button>
-                  <Button
-                    onClick={() => updateApplicationStatus(app.id, "Rejected")}
-                    variant="contained"
-                    color="error"
-                  >
-                    ❌ Reject
-                  </Button>
-                </Box>
-              </Box>
-            </Paper>
-          ))}
-      </Box>
-
-      {/* Default Table Layout for Larger Screens */}
-      <Paper className={styles.tableLayout}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell className={styles.tableHeader}>Name</TableCell>
-              <TableCell className={styles.tableHeader}>Email</TableCell>
-              <TableCell className={styles.tableHeader}>Phone</TableCell>
-              <TableCell className={styles.tableHeader}>Resume</TableCell>
-              <TableCell className={styles.tableHeader}>Cover Letter</TableCell>
-              <TableCell className={styles.tableHeader}>Job Title</TableCell>
-              <TableCell className={styles.tableHeader}>Status</TableCell>
-              <TableCell className={styles.tableHeader}>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+        {!isSmallScreen ? (
+          <Box sx={{ overflowX: "auto" }}>
+            <Table sx={{ minWidth: 700 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Phone</TableCell>
+                  <TableCell>Job Title</TableCell>
+                  <TableCell>Resume</TableCell>
+                  <TableCell>Cover Letter</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {applications
+                  .filter(
+                    (app) =>
+                      filterStatus === "All" || app.status === filterStatus
+                  )
+                  .map((app) => (
+                    <TableRow key={app.id}>
+                      <TableCell>{app.name}</TableCell>
+                      <TableCell>{app.email}</TableCell>
+                      <TableCell>{app.phone || "N/A"}</TableCell>
+                      <TableCell>
+                        {jobs.find((job) => job.id === app.jobId)?.title ||
+                          "Unknown"}
+                      </TableCell>
+                      <TableCell>
+                        {app.resume ? (
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              backgroundColor: "#007bff",
+                              color: "#fff",
+                              textTransform: "none",
+                              padding: "4px 8px",
+                              fontSize: "0.75rem",
+                              borderRadius: "4px",
+                            }}
+                            onClick={() => window.open(app.resume, "_blank")}
+                          >
+                            📄 Open Resume
+                          </Button>
+                        ) : (
+                          "No Resume"
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {app.coverLetter ? (
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              backgroundColor: "#6c757d",
+                              color: "#fff",
+                              textTransform: "none",
+                              padding: "4px 8px",
+                              fontSize: "0.75rem",
+                              borderRadius: "4px",
+                            }}
+                            onClick={() =>
+                              window.open(app.coverLetter, "_blank")
+                            }
+                          >
+                            📝 Open Cover Letter
+                          </Button>
+                        ) : (
+                          "No Cover Letter"
+                        )}
+                      </TableCell>
+                      <TableCell>{app.status}</TableCell>
+                      <TableCell>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            gap: 1,
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              backgroundColor: "#28a745",
+                              color: "#fff",
+                              textTransform: "none",
+                              padding: "4px 8px",
+                              fontSize: "0.75rem",
+                              borderRadius: "4px",
+                            }}
+                            onClick={() =>
+                              updateApplicationStatus(app.id, "Reviewed")
+                            }
+                          >
+                            ✅ Reviewed
+                          </Button>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              backgroundColor: "#dc3545",
+                              color: "#fff",
+                              textTransform: "none",
+                              padding: "4px 8px",
+                              fontSize: "0.75rem",
+                              borderRadius: "4px",
+                            }}
+                            onClick={() =>
+                              updateApplicationStatus(app.id, "Rejected")
+                            }
+                          >
+                            ❌ Reject
+                          </Button>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </Box>
+        ) : (
+          <Box>
             {applications
               .filter(
                 (app) => filterStatus === "All" || app.status === filterStatus
               )
               .map((app) => (
-                <TableRow key={app.id}>
-                  <TableCell>{app.name}</TableCell>
-                  <TableCell>{app.email}</TableCell>
-                  <TableCell>{app.phone || "N/A"}</TableCell>
-                  <TableCell>
-                    {app.resume ? (
-                      <a
-                        href={app.resume}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View Resume
-                      </a>
-                    ) : (
-                      "No Resume"
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {app.coverLetter ? (
-                      <a
-                        href={app.coverLetter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View Cover Letter
-                      </a>
-                    ) : (
-                      "No Cover Letter"
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {jobTitleMap[app.jobId] || "Unknown Job"}
-                  </TableCell>
-                  <TableCell>{app.status}</TableCell>
-                  <TableCell>
-                    <Box className={styles.applicationActions}>
+                <Paper key={app.id} sx={{ marginBottom: 2, padding: 2 }}>
+                  <Typography variant="body1" fontWeight="bold">
+                    {app.name}
+                  </Typography>
+                  <Typography variant="body2">Email: {app.email}</Typography>
+                  <Typography variant="body2">
+                    Phone: {app.phone || "N/A"}
+                  </Typography>
+                  <Typography variant="body2">
+                    Job Title:{" "}
+                    {jobs.find((job) => job.id === app.jobId)?.title ||
+                      "Unknown"}
+                  </Typography>
+                  <Typography variant="body2">Status: {app.status}</Typography>
+                  <Box sx={{ display: "flex", gap: 1, marginTop: 1 }}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      sx={{
+                        backgroundColor: "#28a745",
+                        color: "#fff",
+                        textTransform: "none",
+                        padding: "4px 8px",
+                        fontSize: "0.75rem",
+                        borderRadius: "4px",
+                      }}
+                      onClick={() =>
+                        updateApplicationStatus(app.id, "Reviewed")
+                      }
+                    >
+                      ✅ Reviewed
+                    </Button>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      sx={{
+                        backgroundColor: "#dc3545",
+                        color: "#fff",
+                        textTransform: "none",
+                        padding: "4px 8px",
+                        fontSize: "0.75rem",
+                        borderRadius: "4px",
+                      }}
+                      onClick={() =>
+                        updateApplicationStatus(app.id, "Rejected")
+                      }
+                    >
+                      ❌ Reject
+                    </Button>
+                  </Box>
+                </Paper>
+              ))}
+          </Box>
+        )}
+      </Paper>
+
+ 
+      <Paper sx={{ padding: 2, marginTop: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          📩 Contact Messages
+        </Typography>
+        {messages.length > 0 ? (
+          !isSmallScreen ? (
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Message</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {messages.map((msg) => (
+                  <TableRow key={msg.id}>
+                    <TableCell>{msg.name}</TableCell>
+                    <TableCell>{msg.email}</TableCell>
+                    <TableCell>{msg.message}</TableCell>
+                    <TableCell>
                       <Button
-                        onClick={() =>
-                          updateApplicationStatus(app.id, "Reviewed")
-                        }
-                        variant="contained"
-                        color="primary"
-                      >
-                        ✅ Reviewed
-                      </Button>
-                      <Button
-                        onClick={() =>
-                          updateApplicationStatus(app.id, "Rejected")
-                        }
                         variant="contained"
                         color="error"
+                        onClick={() => deleteMessage(msg.id)}
+                        size="small"
+                        sx={{
+                          padding: "4px 8px",
+                          fontSize: "0.75rem",
+                          borderRadius: "4px",
+                        }}
                       >
-                        ❌ Reject
+                        Delete
                       </Button>
-                    </Box>
-                  </TableCell>
-                </TableRow>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <Box>
+              {messages.map((msg) => (
+                <Paper key={msg.id} sx={{ marginBottom: 2, padding: 2 }}>
+                  <Typography variant="body1" fontWeight="bold">
+                    {msg.name}
+                  </Typography>
+                  <Typography variant="body2">Email: {msg.email}</Typography>
+                  <Typography variant="body2">
+                    Message: {msg.message}
+                  </Typography>
+                  <Box sx={{ marginTop: 1 }}>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => deleteMessage(msg.id)}
+                      size="small"
+                      sx={{
+                        padding: "4px 8px",
+                        fontSize: "0.75rem",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </Box>
+                </Paper>
               ))}
-          </TableBody>
-        </Table>
+            </Box>
+          )
+        ) : (
+          <Typography align="center">No messages found.</Typography>
+        )}
       </Paper>
     </Box>
   );

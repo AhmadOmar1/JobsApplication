@@ -1,68 +1,121 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
-import { Box } from '@mui/material';
-import { ICardJob } from '../../types/jobTypes';
+import { Card, CardContent, Typography, Button, Box } from "@mui/material";
+import { ICardJob } from "../../types/jobTypes";
 
-const JobCard = ({ id, title, company, location, salary, type }: ICardJob) => {
-    const navigate = useNavigate();
+interface IJobCardProps extends ICardJob {
+  onViewDetails: () => void;
+}
 
-    const handleViewDetails = () => {
-        navigate(`/job/${id}`);
-    };
-
-    return (
-        <Card
-            sx={{
-                width: 300,
-                height: 250,
-                margin: 4,
-                backgroundColor: '#f5f5f5',
-                borderRadius: 2,
-                boxShadow: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                '&:hover': {
-                    boxShadow: 6,
-                    cursor: 'pointer',
-                },
-            }}
+const JobCard: React.FC<IJobCardProps> = ({
+  title,
+  company,
+  location,
+  salary,
+  type,
+  onViewDetails,
+}) => {
+  return (
+    <Card
+      sx={{
+        borderRadius: 2,
+        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        "&:hover": {
+          transform: "scale(1.05)",
+          boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.15)",
+        },
+        width: "100%",
+        maxWidth: "350px",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <CardContent
+        sx={{
+          padding: 3,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          flexGrow: 1,
+        }}
+      >
+        <Typography
+          variant="h5"
+          component="div"
+          sx={{ fontWeight: "bold", color: "#333", marginBottom: 1 }}
         >
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    {title}
-                </Typography>
-                <Box p={1} gap='8px' display={'flex'} flexDirection={'column'}>
-                    <Typography variant="body2" color="text.secondary" >
-                        <strong>Company:</strong> {company}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" >
-                        <strong>Location:</strong> {location}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" >
-                        <strong>Salary:</strong> {salary}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" >
-                        <strong>Type:</strong> {type}
-                    </Typography>
-                </Box>
-            </CardContent>
-            <Button
-                variant="contained"
-                sx={{
-                    backgroundColor: '#5D87A1',
-                    '&:hover': { backgroundColor: '#4C708A' },
-                    borderRadius: '0 0 8px 8px',
-                }}
-                onClick={handleViewDetails}
-            >
-                View Details
-            </Button>
-        </Card>
-    );
+          {title || "No Title"}
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 2,
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{
+              backgroundColor: "#f0f0f0",
+              padding: "4px 8px",
+              borderRadius: 2,
+              fontWeight: "bold",
+              color: "#555",
+            }}
+          >
+            {type || "Unknown"}
+          </Typography>
+        </Box>
+
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography variant="body2" color="textSecondary">
+            <strong>Company:</strong> {company || "Unknown"}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            <strong>Location:</strong> {location || "Not specified"}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            <strong>Salary:</strong> {salary || "Not disclosed"}
+          </Typography>
+        </Box>
+
+        {company && (
+          <Typography
+            variant="body2"
+            sx={{
+              color: "#0288D1",
+              fontWeight: "bold",
+              marginTop: 3,
+              marginBottom: 1,
+            }}
+          >
+            ~{company.toLowerCase().replace(/\s+/g, "")}.com
+          </Typography>
+        )}
+
+        <Button
+          variant="contained"
+          onClick={onViewDetails}
+          sx={{
+            backgroundColor: "#0288D1",
+            color: "#fff",
+            padding: "6px 16px",
+            borderRadius: 2,
+            fontSize: "0.875rem",
+            fontWeight: "bold",
+            width: "100%",
+            "&:hover": {
+              backgroundColor: "#0277BD",
+            },
+          }}
+        >
+          Apply
+        </Button>
+      </CardContent>
+    </Card>
+  );
 };
 
 export default JobCard;
