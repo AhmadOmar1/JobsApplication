@@ -41,9 +41,18 @@ A modern, responsive, and user-friendly online job portal built with **React**, 
 - Node.js (v16 or higher)
 - npm (v8 or higher)
 
+### Team Member 
+
+- Ahmad Omar
+- Lama Emad Ali
+- maaly Zourab
+- Mahmoud Abed
+
 ### Installation
 
 1. **Clone the repository**:
    ```bash
    git clone [https://github.com/your-username/online-job-portal.git](https://github.com/AhmadOmar1/JobsApplication)
    cd JobsApplication
+   npm install i
+   npm run dev
