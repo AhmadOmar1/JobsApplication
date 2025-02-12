@@ -191,9 +191,9 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
       />
 
       <TextField
-        label="Posted At"
+        label="Posted At (Date & Time)"
         name="postedAt"
-        type="date"
+        type="datetime-local"
         value={jobData.postedAt}
         onChange={handleChange}
         error={!!errors.postedAt}
@@ -201,7 +201,9 @@ const JobForm = ({ onSubmit }: JobFormProps) => {
         required
         className={styles.textField}
         slotProps={{
-          inputLabel: { shrink: true },
+          inputLabel: {
+            shrink: true,
+          },
         }}
       />
 

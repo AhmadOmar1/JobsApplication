@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import { JobRouter } from "./routes";
 import { AuthProvider } from "./providers/AuthProvider";
@@ -12,7 +11,7 @@ function App() {
       <JobProvider>
         <ApplicationProvider>
           <BrowserRouter>
-            <ScrollToTopButton/>
+            <ScrollToTopButton />
             <JobRouter />
           </BrowserRouter>
         </ApplicationProvider>

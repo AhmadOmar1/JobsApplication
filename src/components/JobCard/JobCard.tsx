@@ -77,7 +77,7 @@ const JobCard: React.FC<IJobCardProps> = ({
             <strong>Location:</strong> {location || "Not specified"}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            <strong>Salary:</strong> {salary || "Not disclosed"}
+            <strong>Salary:</strong> {salary ? `$${salary}` : "Not disclosed"}
           </Typography>
         </Box>
 

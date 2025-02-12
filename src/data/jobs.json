@@ -2,10 +2,10 @@
   {
     "id": "1",
     "title": "Software Engineer",
-    "postedAt": "2025-03-01",
+    "postedAt": "2025-03-01T09:00",
     "company": "Tech Corp",
     "location": "San Francisco, CA",
-    "salary": "$120,000",
+    "salary": "120,000",
     "type": "Full-time",
     "description": "Develop and maintain scalable software solutions for enterprise clients.",
     "qualifications": [
@@ -23,10 +23,10 @@
   {
     "id": "2",
     "title": "Product Manager",
-    "postedAt": "2025-02-01",
+    "postedAt": "2025-02-01T10:30",
     "company": "Innovate Inc",
     "location": "New York, NY",
-    "salary": "$130,000",
+    "salary": "130,000",
     "type": "Contract",
     "description": "Lead cross-functional teams to design, build, and roll out innovative products.",
     "qualifications": [
@@ -44,10 +44,10 @@
   {
     "id": "3",
     "title": "Data Scientist",
-    "postedAt": "2025-05-15",
+    "postedAt": "2025-05-15T08:45",
     "company": "DataWorks",
     "location": "Remote",
-    "salary": "$110,000",
+    "salary": "110,000",
     "type": "Remote",
     "description": "Analyze complex datasets to derive meaningful business insights.",
     "qualifications": [
@@ -65,10 +65,10 @@
   {
     "id": "4",
     "title": "UX Designer",
-    "postedAt": "2025-04-20",
+    "postedAt": "2025-04-20T14:15",
     "company": "Creative Labs",
     "location": "Los Angeles, CA",
-    "salary": "$90,000",
+    "salary": "90,000",
     "type": "Part-time",
     "description": "Create engaging and intuitive user experiences for web and mobile applications.",
     "qualifications": [
@@ -86,10 +86,10 @@
   {
     "id": "5",
     "title": "Cyber Security Analyst",
-    "postedAt": "2025-04-15",
+    "postedAt": "2025-04-15T13:00",
     "company": "SecureTech",
     "location": "Chicago, IL",
-    "salary": "$100,000",
+    "salary": "100,000",
     "type": "Full-time",
     "description": "Monitor and protect company networks against cyber threats.",
     "qualifications": [
@@ -107,10 +107,10 @@
   {
     "id": "6",
     "title": "Marketing Manager",
-    "postedAt": "2025-05-15",
+    "postedAt": "2025-05-15T15:45",
     "company": "Branding Co",
     "location": "Miami, FL",
-    "salary": "$95,000",
+    "salary": "95,000",
     "type": "Contract",
     "description": "Develop and execute strategic marketing campaigns for global brands.",
     "qualifications": [
@@ -128,10 +128,10 @@
   {
     "id": "7",
     "title": "AI Engineer",
-    "postedAt": "2025-06-5",
+    "postedAt": "2025-06-05T11:30",
     "company": "AI Innovations",
     "location": "Boston, MA",
-    "salary": "$130,000",
+    "salary": "130,000",
     "type": "Full-time",
     "description": "Build and optimize AI models to improve business processes.",
     "qualifications": [
@@ -149,10 +149,10 @@
   {
     "id": "8",
     "title": "HR Specialist",
-    "postedAt": "2025-07-25",
+    "postedAt": "2025-07-25T10:00",
     "company": "People Corp",
     "location": "Denver, CO",
-    "salary": "$70,000",
+    "salary": "70,000",
     "type": "Part-time",
     "description": "Manage hiring processes and employee relations.",
     "qualifications": [
@@ -170,10 +170,10 @@
   {
     "id": "9",
     "title": "Business Analyst",
-    "postedAt": "2025-07-01",
+    "postedAt": "2025-07-01T09:15",
     "company": "Strategy Solutions",
     "location": "Seattle, WA",
-    "salary": "$85,000",
+    "salary": "85,000",
     "type": "Full-time",
     "description": "Analyze business processes and suggest improvements.",
     "qualifications": [
@@ -191,10 +191,10 @@
   {
     "id": "10",
     "title": "Graphic Designer",
-    "postedAt": "2025-06-28",
+    "postedAt": "2025-06-28T12:45",
     "company": "Design Studio",
     "location": "Portland, OR",
-    "salary": "$75,000",
+    "salary": "75,000",
     "type": "Remote",
     "description": "Design engaging visual content for various media platforms.",
     "qualifications": [
@@ -213,10 +213,10 @@
   {
     "id": "11",
     "title": "DevOps Engineer",
-    "postedAt": "2025-10-06",
+    "postedAt": "2025-10-06T14:00",
     "company": "CloudTech",
     "location": "Austin, TX",
-    "salary": "$115,000",
+    "salary": "115,000",
     "type": "Full-time",
     "description": "Manage and optimize cloud infrastructure for high-availability systems.",
     "qualifications": [
@@ -234,10 +234,10 @@
   {
     "id": "12",
     "title": "Financial Analyst",
-    "postedAt": "2025-08-15",
+    "postedAt": "2025-08-15T16:30",
     "company": "FinancePro",
     "location": "Charlotte, NC",
-    "salary": "$80,000",
+    "salary": "80,000",
     "type": "Full-time",
     "description": "Analyze financial data to support business decision-making.",
     "qualifications": [
@@ -255,10 +255,10 @@
   {
     "id": "13",
     "title": "Content Writer",
-    "postedAt": "2025-07-20",
+    "postedAt": "2025-07-20T10:10",
     "company": "Creative Minds",
     "location": "Remote",
-    "salary": "$60,000",
+    "salary": "60,000",
     "type": "Remote",
     "description": "Create engaging content for blogs, websites, and social media.",
     "qualifications": [
@@ -276,10 +276,10 @@
   {
     "id": "14",
     "title": "Sales Manager",
-    "postedAt": "2025-08-22",
+    "postedAt": "2025-08-22T08:55",
     "company": "SalesForce Inc",
     "location": "Dallas, TX",
-    "salary": "$90,000",
+    "salary": "90,000",
     "type": "Full-time",
     "description": "Lead a sales team to achieve revenue targets.",
     "qualifications": [
@@ -297,10 +297,10 @@
   {
     "id": "15",
     "title": "Mobile App Developer",
-    "postedAt": "2025-02-14",
+    "postedAt": "2025-02-14T17:20",
     "company": "AppWorks",
     "location": "San Diego, CA",
-    "salary": "$100,000",
+    "salary": "100,000",
     "type": "Contract",
     "description": "Develop and maintain mobile applications for iOS and Android.",
     "qualifications": [
@@ -318,10 +318,10 @@
   {
     "id": "16",
     "title": "Network Engineer",
-    "postedAt": "2025-09-02",
+    "postedAt": "2025-09-02T11:15",
     "company": "NetSolutions",
     "location": "Atlanta, GA",
-    "salary": "$95,000",
+    "salary": "95,000",
     "type": "Full-time",
     "description": "Design and maintain network infrastructure for enterprise clients.",
     "qualifications": [
@@ -339,10 +339,10 @@
   {
     "id": "17",
     "title": "Customer Support Specialist",
-    "postedAt": "2025-07-17",
+    "postedAt": "2025-07-17T14:40",
     "company": "Supportify",
     "location": "Remote",
-    "salary": "$50,000",
+    "salary": "50,000",
     "type": "Remote",
     "description": "Provide exceptional customer support via chat, email, and phone.",
     "qualifications": [
@@ -360,10 +360,10 @@
   {
     "id": "18",
     "title": "Project Manager",
-    "postedAt": "2025-02-20",
+    "postedAt": "2025-02-20T18:10",
     "company": "PlanIt Solutions",
     "location": "Phoenix, AZ",
-    "salary": "$110,000",
+    "salary": "110,000",
     "type": "Full-time",
     "description": "Oversee projects from initiation to completion, ensuring timely delivery.",
     "qualifications": [
@@ -381,10 +381,10 @@
   {
     "id": "19",
     "title": "Quality Assurance Engineer",
-    "postedAt": "2025-07-30",
+    "postedAt": "2025-07-30T10:50",
     "company": "Testify Labs",
     "location": "Raleigh, NC",
-    "salary": "$85,000",
+    "salary": "85,000",
     "type": "Full-time",
     "description": "Ensure the quality of software products through rigorous testing.",
     "qualifications": [
@@ -402,10 +402,10 @@
   {
     "id": "20",
     "title": "Social Media Manager",
-    "postedAt": "2025-06-08",
+    "postedAt": "2025-06-08T12:20",
     "company": "BuzzMedia",
     "location": "Chicago, IL",
-    "salary": "$65,000",
+    "salary": "65,000",
     "type": "Part-time",
     "description": "Manage and grow social media accounts for clients.",
     "qualifications": [
@@ -423,10 +423,10 @@
   {
     "id": "21",
     "title": "Frontend Developer",
-    "postedAt": "2025-11-20",
+    "postedAt": "2025-11-20T09:30",
     "company": "WebMasters",
     "location": "Toronto, Canada",
-    "salary": "$105,000",
+    "salary": "105,000",
     "type": "Full-time",
     "description": "Develop responsive and user-friendly web interfaces using modern technologies.",
     "qualifications": [

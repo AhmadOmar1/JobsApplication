@@ -11,14 +11,15 @@ const PostJob = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (jobData: Omit<IJob, "id">) => {
-    const newJob: IJob = {
-      id: `job${jobs.length + 1}`,
-      ...jobData,
-      postedAt: new Date().toISOString().split("T")[0], 
-      qualifications: jobData.qualifications ?? [],
-      requirements: jobData.requirements ?? [],
-    };
-
+   const newJob: IJob = {
+     id: `job${jobs.length + 1}`,
+     ...jobData,
+     postedAt: jobData.postedAt
+       ? new Date(jobData.postedAt).toISOString()
+       : new Date().toISOString(),
+     qualifications: jobData.qualifications ?? [],
+     requirements: jobData.requirements ?? [],
+   };
     const updatedJobs = [newJob, ...jobs];
     setJobs(updatedJobs);
     setJobsInLocalStorage(updatedJobs);
