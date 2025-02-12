@@ -16,21 +16,27 @@ export const JobContext = createContext<JobContextType | null>(null);
 export const JobProvider = ({ children }: { children: ReactNode }) => {
   const [jobs, setJobs] = useState<IJob[]>([]);
 
- useEffect(() => {
-   const storedJobs = getJobsFromLocalStorage();
-   if (storedJobs.length > 0) {
-     setJobs(storedJobs);
-   } else {
+useEffect(() => {
+  const storedJobs = getJobsFromLocalStorage();
+  if (storedJobs.length > 0) {
+    setJobs(
+      storedJobs.map((job) => ({
+        ...job,
+        postedAt: new Date(job.postedAt).toISOString(), 
+      }))
+    );
+  } else {
     const formattedJobs: IJob[] = jobsData.map((job) => ({
       ...job,
       type: job.type as JobType,
       postedAt: job.postedAt || new Date().toISOString(),
     }));
 
-     setJobs(formattedJobs);
-     setJobsInLocalStorage(formattedJobs);
-   }
- }, []);
+    setJobs(formattedJobs);
+    setJobsInLocalStorage(formattedJobs);
+  }
+}, []);
+
 
   useEffect(() => {
     if (jobs.length > 0) {

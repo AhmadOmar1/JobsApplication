@@ -45,7 +45,7 @@ const JobDetails = () => {
       </Typography>
 
       <Typography variant="h6" color="textSecondary">
-        <strong>Salary:</strong> {job.salary}
+        <strong>Salary:</strong> ${job.salary}
       </Typography>
 
       <Typography variant="h6" color="textSecondary">
@@ -53,8 +53,7 @@ const JobDetails = () => {
       </Typography>
 
       <Typography variant="h6" color="textSecondary">
-        <strong>Posted At:</strong>{" "}
-        {new Date(job.postedAt).toLocaleDateString()}
+        <strong>Posted At:</strong> {new Date(job.postedAt).toLocaleString()}
       </Typography>
 
       <Typography variant="h6" color="textSecondary">
@@ -72,22 +71,34 @@ const JobDetails = () => {
         Qualifications:
       </Typography>
       <List sx={{ marginBottom: 3 }}>
-        {job.qualifications.map((qualification, index) => (
-          <ListItem key={index} sx={{ pl: 0 }}>
-            ✅ {qualification}
-          </ListItem>
-        ))}
+        {job.qualifications?.length > 0 ? (
+          job.qualifications.map((qualification, index) => (
+            <ListItem key={index} sx={{ pl: 0 }}>
+              ✅ {qualification}
+            </ListItem>
+          ))
+        ) : (
+          <Typography variant="body1" color="textSecondary">
+            No qualifications available.
+          </Typography>
+        )}
       </List>
 
       <Typography variant="h5" sx={{ fontWeight: "bold" }}>
         Requirements:
       </Typography>
       <List sx={{ marginBottom: 3 }}>
-        {job.requirements.map((requirement, index) => (
-          <ListItem key={index} sx={{ pl: 0 }}>
-            🔹 {requirement}
-          </ListItem>
-        ))}
+        {job.requirements?.length > 0 ? (
+          job.requirements.map((requirement, index) => (
+            <ListItem key={index} sx={{ pl: 0 }}>
+              🔹 {requirement}
+            </ListItem>
+          ))
+        ) : (
+          <Typography variant="body1" color="textSecondary">
+            No requirements available.
+          </Typography>
+        )}
       </List>
 
       {!isAuthenticated && (

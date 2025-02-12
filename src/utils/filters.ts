@@ -15,20 +15,21 @@ export const filterJobs = (jobs: IJob[], filters: IFilters) => {
       const salary = job.salary
         ? parseFloat(job.salary.replace(/[^\d.-]/g, "")) || 0
         : 0;
-      const jobDate = new Date(job.postedAt).getTime();
+      const jobDate = job.postedAt ? new Date(job.postedAt).getTime() : 0;
       const now = Date.now();
 
       let isDateMatch = true;
-      if (filters.postingDate === "Last Hour") {
-        isDateMatch = jobDate >= now - 60 * 60 * 1000;
-      } else if (filters.postingDate === "Last 24 Hours") {
-        isDateMatch = jobDate >= now - 24 * 60 * 60 * 1000;
-      } else if (filters.postingDate === "Last 7 Days") {
-        isDateMatch = jobDate >= now - 7 * 24 * 60 * 60 * 1000;
-      } else if (filters.postingDate === "Last 14 Days") {
-        isDateMatch = jobDate >= now - 14 * 24 * 60 * 60 * 1000;
-      } else if (filters.postingDate === "Last 30 Days") {
-        isDateMatch = jobDate >= now - 30 * 24 * 60 * 60 * 1000;
+      if (filters.postingDate !== "All") {
+        const filterOptions: { [key: string]: number } = {
+          "Last Hour": 60 * 60 * 1000,
+          "Last 24 Hours": 24 * 60 * 60 * 1000,
+          "Last 7 Days": 7 * 24 * 60 * 60 * 1000,
+          "Last 14 Days": 14 * 24 * 60 * 60 * 1000,
+          "Last 30 Days": 30 * 24 * 60 * 60 * 1000,
+        };
+
+        isDateMatch =
+          jobDate >= now - (filterOptions[filters.postingDate] || 0);
       }
 
       return (
