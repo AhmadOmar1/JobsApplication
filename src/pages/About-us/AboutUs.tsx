@@ -1,55 +1,76 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, Container } from "@mui/material";
+import { motion } from "framer-motion";
 import about2 from "../../assets/about-2.jpeg";
 import about3 from "../../assets/about-3.jpeg";
 import about4 from "../../assets/about-4.jpeg";
 import about5 from "../../assets/about-5.jpeg";
 
+const MotionBox = motion.create(Box);
+
 const AboutUs = () => {
   const navigate = useNavigate();
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+  };
+
   return (
     <Box sx={{ backgroundColor: "#f9f9f9", minHeight: "100vh", paddingY: 6 }}>
-   
       <Container>
-        <Typography
-          variant="h4"
-          sx={{
-            textAlign: "center",
-            fontWeight: "bold",
-            marginBottom: 2,
-            color: "#333",
-            fontSize: { xs: "1.8rem", sm: "2.5rem" }, 
-          }}
+        <MotionBox
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
-          Welcome to <span style={{ color: "#1976d2" }}>Your Career Hub</span>
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            textAlign: "center",
-            color: "#555",
-            marginBottom: 4,
-            fontSize: { xs: "0.9rem", sm: "1.2rem" }, 
-          }}
-        >
-          Empowering professionals and job seekers to connect and grow. We are
-          committed to creating opportunities that lead to meaningful careers.
-        </Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              textAlign: "center",
+              fontWeight: "bold",
+              marginBottom: 2,
+              color: "#333",
+              fontSize: { xs: "1.8rem", sm: "2.5rem" },
+            }}
+          >
+            Welcome to <span style={{ color: "#1976d2" }}>Your Career Hub</span>
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              textAlign: "center",
+              color: "#555",
+              marginBottom: 4,
+              fontSize: { xs: "0.9rem", sm: "1.2rem" },
+            }}
+          >
+            Empowering professionals and job seekers to connect and grow. We are
+            committed to creating opportunities that lead to meaningful careers.
+          </Typography>
+        </MotionBox>
       </Container>
 
-    
       <Container>
         <Box
           sx={{
             display: "flex",
-            flexDirection: { xs: "column", md: "row" }, 
+            flexDirection: { xs: "column", md: "row" },
             alignItems: "center",
             gap: 4,
           }}
         >
-         
-          <Box sx={{ flex: 1, maxWidth: { xs: "100%", md: "50%" } }}>
+          <MotionBox
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            sx={{ flex: 1, maxWidth: { xs: "100%", md: "50%" } }}
+          >
             <Typography
               variant="body1"
               sx={{
@@ -84,17 +105,19 @@ const AboutUs = () => {
                 color: "#fff",
                 borderRadius: 2,
                 "&:hover": { backgroundColor: "#555" },
-                paddingX: { xs: 2, sm: 4 }, 
+                paddingX: { xs: 2, sm: 4 },
                 fontSize: { xs: "0.8rem", sm: "1rem" },
               }}
               onClick={() => navigate("/")}
             >
               Apply Now
             </Button>
-          </Box>
+          </MotionBox>
 
-          
-          <Box
+          <MotionBox
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
             sx={{
               flex: 1,
               display: "flex",
@@ -105,26 +128,24 @@ const AboutUs = () => {
             }}
           >
             {[about2, about3, about4, about5].map((img, index) => (
-              <img
+              <motion.img
                 key={index}
                 src={img}
                 alt={`About Us ${index + 1}`}
+                variants={imageVariants}
+                initial="hidden"
+                animate="visible"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
                 style={{
-                  width: "48%", 
+                  width: "48%",
                   height: "auto",
                   borderRadius: "8px",
-                  transition: "transform 0.3s ease-in-out",
                   cursor: "pointer",
                 }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
               />
             ))}
-          </Box>
+          </MotionBox>
         </Box>
       </Container>
     </Box>

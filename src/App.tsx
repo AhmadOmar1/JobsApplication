@@ -4,19 +4,23 @@ import { AuthProvider } from "./providers/AuthProvider";
 import { JobProvider } from "./providers/JobProvider";
 import { ApplicationProvider } from "./providers/ApplicationProvider";
 import ScrollToTopButton from "./components/ScrollToTopButton/ScrollToTopButton";
+import theme from "./theme";
+import { ThemeProvider } from "@emotion/react";
 
 function App() {
   return (
-    <AuthProvider>
-      <JobProvider>
-        <ApplicationProvider>
-          <BrowserRouter>
-            <ScrollToTopButton />
-            <JobRouter />
-          </BrowserRouter>
-        </ApplicationProvider>
-      </JobProvider>
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <JobProvider>
+          <ApplicationProvider>
+            <BrowserRouter>
+              <ScrollToTopButton />
+              <JobRouter />
+            </BrowserRouter>
+          </ApplicationProvider>
+        </JobProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

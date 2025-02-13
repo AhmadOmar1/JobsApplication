@@ -14,7 +14,7 @@ export const useApplications = () => {
     );
   }
 
-  const { applications, addApplication, updateApplicationStatus } = context;
+  const { applications, addApplication, updateApplicationStatus, deleteApplication } = context;
 
   const addNewApplication = (newApplication: IApplication) => {
     const updatedApplications = [...applications, newApplication];
@@ -26,5 +26,6 @@ export const useApplications = () => {
     applications,
     addApplication: addNewApplication,
     updateApplicationStatus,
+    deleteApplication, 
   };
 };

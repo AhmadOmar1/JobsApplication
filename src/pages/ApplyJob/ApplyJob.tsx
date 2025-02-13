@@ -4,8 +4,10 @@ import { useAuth } from "../../hooks/useAuth";
 import { useJobs } from "../../hooks/useJobs";
 import { useApplications } from "../../hooks/useApplications";
 import { IApplication } from "../../types/applicationTypes";
-import ApplicationForm from "../../components/ApplicationForm/ApplicationForm";
+import { motion } from "framer-motion";
 
+import ApplicationForm from "../../components/ApplicationForm/ApplicationForm";
+import { useEffect } from "react";
 const ApplyJob = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
@@ -14,6 +16,10 @@ const ApplyJob = () => {
   const { isAuthenticated } = useAuth();
 
   const job = jobs.find((job) => job.id === jobId);
+
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }, []);
 
   if (!job) {
     return (
@@ -47,19 +53,26 @@ const ApplyJob = () => {
   };
 
   return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h5" gutterBottom>
-        Apply for {job.title}
-      </Typography>
-
-      {!isAuthenticated ? (
-        <ApplicationForm jobId={job.id} onSubmit={handleFormSubmit} />
-      ) : (
-        <Typography variant="body1" color="error">
-          Admins cannot apply for jobs.
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Box sx={{ padding: 3 }}>
+        <Typography variant="h5" gutterBottom>
+          Apply for {job.title}
         </Typography>
-      )}
-    </Box>
+
+        {!isAuthenticated ? (
+          <ApplicationForm jobId={job.id} onSubmit={handleFormSubmit} />
+        ) : (
+          <Typography variant="body1" color="error">
+            Admins cannot apply for jobs.
+          </Typography>
+        )}
+      </Box>
+    </motion.div>
   );
 };
 

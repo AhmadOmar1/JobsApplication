@@ -24,7 +24,7 @@ const JobCard: React.FC<IJobCardProps> = ({
           boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.15)",
         },
         width: "100%",
-        maxWidth: "350px",
+        maxWidth: "330px",
         height: "100%",
         display: "flex",
         flexDirection: "column",
@@ -40,7 +40,7 @@ const JobCard: React.FC<IJobCardProps> = ({
         }}
       >
         <Typography
-          variant="h5"
+          variant="h6"
           component="div"
           sx={{ fontWeight: "bold", color: "#333", marginBottom: 1 }}
         >
@@ -88,7 +88,7 @@ const JobCard: React.FC<IJobCardProps> = ({
               color: "#0288D1",
               fontWeight: "bold",
               marginTop: 3,
-              marginBottom: 1,
+              marginBottom: 1.5,
             }}
           >
             ~{company.toLowerCase().replace(/\s+/g, "")}.com
