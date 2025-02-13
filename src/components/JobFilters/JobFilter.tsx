@@ -2,13 +2,13 @@ import React from "react";
 import { TextField, Button, Box, MenuItem } from "@mui/material";
 import { JobType } from "../../types/jobTypes";
 
-interface FilterProps {
+interface IFilterProps {
   onFilterChange: (text: string) => void;
   onJobTypeChange: (jobType: JobType) => void;
   jobType: JobType | "";
 }
 
-const JobFilter = ({ onFilterChange, onJobTypeChange }: FilterProps) => {
+const JobFilter = ({ onFilterChange, onJobTypeChange }: IFilterProps) => {
   const [jobType, setJobType] = React.useState<JobType | "">("");
 
   const handleJobTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

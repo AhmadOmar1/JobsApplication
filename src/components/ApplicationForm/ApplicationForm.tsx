@@ -13,7 +13,7 @@ interface IApplicationFormProps {
   onSubmit: (formData: FormData) => void;
 }
 
-interface FormErrors {
+interface IFormErrors {
   name?: string;
   email?: string;
   phone?: string;
@@ -30,7 +30,7 @@ const ApplicationForm: React.FC<IApplicationFormProps> = ({
   const [phone, setPhone] = useState("");
   const [resume, setResume] = useState<File | null>(null);
   const [coverLetter, setCoverLetter] = useState<File | null>(null);
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<IFormErrors>({});
 
   const validateField = (
     name: string,
@@ -85,7 +85,7 @@ const ApplicationForm: React.FC<IApplicationFormProps> = ({
   };
 
   const validateForm = () => {
-    const errors: FormErrors = {};
+    const errors: IFormErrors = {};
     errors.name = validateField("name", name);
     errors.email = validateField("email", email);
     errors.phone = validateField("phone", phone);
