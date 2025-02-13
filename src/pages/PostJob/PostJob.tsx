@@ -5,21 +5,22 @@ import { IJob } from "../../types/jobTypes";
 import JobForm from "../../components/JobForm/JobForm";
 import styles from "./post-job.module.css";
 import { setJobsInLocalStorage } from "../../utils/localStorage";
+import { motion } from "framer-motion";
 
 const PostJob = () => {
   const { jobs, setJobs } = useJobs();
   const navigate = useNavigate();
 
   const handleSubmit = (jobData: Omit<IJob, "id">) => {
-   const newJob: IJob = {
-     id: `job${jobs.length + 1}`,
-     ...jobData,
-     postedAt: jobData.postedAt
-       ? new Date(jobData.postedAt).toISOString()
-       : new Date().toISOString(),
-     qualifications: jobData.qualifications ?? [],
-     requirements: jobData.requirements ?? [],
-   };
+    const newJob: IJob = {
+      id: `job${jobs.length + 1}`,
+      ...jobData,
+      postedAt: jobData.postedAt
+        ? new Date(jobData.postedAt).toISOString()
+        : new Date().toISOString(),
+      qualifications: jobData.qualifications ?? [],
+      requirements: jobData.requirements ?? [],
+    };
     const updatedJobs = [newJob, ...jobs];
     setJobs(updatedJobs);
     setJobsInLocalStorage(updatedJobs);
@@ -28,16 +29,23 @@ const PostJob = () => {
   };
 
   return (
-    <Box className={styles.container}>
-      <Box className={styles.header}></Box>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Box className={styles.container}>
+        <Box className={styles.header}></Box>
 
-      <Paper className={styles.paper}>
-        <Typography variant="h5" gutterBottom className={styles.title}>
-          Post a New Job
-        </Typography>
-        <JobForm onSubmit={handleSubmit} />
-      </Paper>
-    </Box>
+        <Paper className={styles.paper}>
+          <Typography variant="h5" gutterBottom className={styles.title}>
+            Post a New Job
+          </Typography>
+          <JobForm onSubmit={handleSubmit} />
+        </Paper>
+      </Box>
+    </motion.div>
   );
 };
 

@@ -22,20 +22,26 @@ useEffect(() => {
     setJobs(
       storedJobs.map((job) => ({
         ...job,
-        postedAt: new Date(job.postedAt).toISOString(), 
+        postedAt: isNaN(new Date(job.postedAt).getTime())
+          ? new Date().toISOString()
+          : new Date(job.postedAt).toISOString(),
       }))
     );
   } else {
     const formattedJobs: IJob[] = jobsData.map((job) => ({
       ...job,
       type: job.type as JobType,
-      postedAt: job.postedAt || new Date().toISOString(),
+      postedAt:
+        job.postedAt && !isNaN(new Date(job.postedAt).getTime())
+          ? new Date(job.postedAt).toISOString()
+          : new Date().toISOString(),
     }));
 
     setJobs(formattedJobs);
     setJobsInLocalStorage(formattedJobs);
   }
 }, []);
+
 
 
   useEffect(() => {

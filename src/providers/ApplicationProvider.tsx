@@ -12,6 +12,7 @@ interface IApplicationContext {
     id: string,
     status: "Pending" | "Reviewed" | "Rejected"
   ) => void;
+  deleteApplication: (id: string) => void; 
 }
 
 export const ApplicationContext = createContext<IApplicationContext | null>(
@@ -48,9 +49,22 @@ export const ApplicationProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const deleteApplication = (id: string) => {
+    setApplications((prev) => {
+      const updatedApplications = prev.filter((app) => app.id !== id);
+      setApplicationsInLocalStorage(updatedApplications);
+      return updatedApplications;
+    });
+  };
+
   return (
     <ApplicationContext.Provider
-      value={{ applications, addApplication, updateApplicationStatus }}
+      value={{
+        applications,
+        addApplication,
+        updateApplicationStatus,
+        deleteApplication,
+      }}
     >
       {children}
     </ApplicationContext.Provider>

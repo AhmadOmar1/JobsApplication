@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-
+import { motion } from "framer-motion";
 import {
   Box,
   Typography,
@@ -17,11 +17,9 @@ import {
   useTheme,
   Pagination,
 } from "@mui/material";
-
 import { useApplications } from "../../hooks/useApplications";
 import { useJobs } from "../../hooks/useJobs";
 import { getApplicationsFromLocalStorage } from "../../utils/localStorage";
-
 import {
   adminDashboardReducer,
   AdminDashboardState,
@@ -37,9 +35,9 @@ import {
   AdminDashboardAction,
 } from "../../reducer-AdminDashboard/actions";
 
-
 const AdminDashboard = () => {
-  const { applications, updateApplicationStatus } = useApplications();
+  const { applications, updateApplicationStatus, deleteApplication } =
+    useApplications(); 
   const { jobs } = useJobs();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -136,139 +134,243 @@ const AdminDashboard = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h4" gutterBottom>
-        Admin Dashboard
-      </Typography>
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Typography variant="h4" gutterBottom>
+          Admin Dashboard
+        </Typography>
+      </motion.div>
 
       {jobsWithApplications.length > 0 && (
-        <Paper sx={{ padding: 2, marginBottom: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            📊 Total Applications Per Job
-          </Typography>
-          <Box sx={{ overflowX: "auto" }}>
-            <Table sx={{ minWidth: 290 }}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Job Title</TableCell>
-                  <TableCell align="center">Total Applications</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {currentJobs.map((job) => (
-                  <TableRow key={job.id}>
-                    <TableCell>{job.title}</TableCell>
-                    <TableCell align="center">
-                      {jobApplicationCount[job.id]}
-                    </TableCell>
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <Paper sx={{ padding: 2, marginBottom: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              📊 Total Applications Per Job
+            </Typography>
+            <Box sx={{ overflowX: "auto" }}>
+              <Table sx={{ minWidth: 290 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Job Title</TableCell>
+                    <TableCell align="center">Total Applications</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Box>
+                </TableHead>
+                <TableBody>
+                  {currentJobs.map((job) => (
+                    <TableRow key={job.id}>
+                      <TableCell>{job.title}</TableCell>
+                      <TableCell align="center">
+                        {jobApplicationCount[job.id]}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
 
-          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-            <Pagination
-              count={totalJobPages}
-              page={currentJobPage}
-              onChange={(_, page) => handleJobPageChange(page)}
-              color="primary"
-            />
-          </Box>
-        </Paper>
+            <Box
+              sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}
+            >
+              <Pagination
+                count={totalJobPages}
+                page={currentJobPage}
+                onChange={(_, page) => handleJobPageChange(page)}
+                color="primary"
+              />
+            </Box>
+          </Paper>
+        </motion.div>
       )}
 
-      <Paper sx={{ padding: 2, marginBottom: 3 }}>
-        <Typography variant="h6" gutterBottom>
-          📄 Job Applications
-        </Typography>
-        <FormControl sx={{ minWidth: 200, marginBottom: 2 }}>
-          <Select
-            value={filterStatus}
-            onChange={(e) => handleFilterChange(e.target.value)}
-          >
-            <MenuItem value="All">All Applications</MenuItem>
-            <MenuItem value="Pending">Pending</MenuItem>
-            <MenuItem value="Reviewed">Reviewed</MenuItem>
-            <MenuItem value="Rejected">Rejected</MenuItem>
-          </Select>
-        </FormControl>
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        viewport={{ once: true }}
+      >
+        <Paper sx={{ padding: 2, marginBottom: 3 }}>
+          <Typography variant="h6" gutterBottom>
+            📄 Job Applications
+          </Typography>
+          <FormControl sx={{ minWidth: 200, marginBottom: 2 }}>
+            <Select
+              value={filterStatus}
+              onChange={(e) => handleFilterChange(e.target.value)}
+            >
+              <MenuItem value="All">All Applications</MenuItem>
+              <MenuItem value="Pending">Pending</MenuItem>
+              <MenuItem value="Reviewed">Reviewed</MenuItem>
+              <MenuItem value="Rejected">Rejected</MenuItem>
+            </Select>
+          </FormControl>
 
-        {!isSmallScreen ? (
-          <Box sx={{ overflowX: "auto" }}>
-            <Table sx={{ minWidth: 700 }}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell>Job Title</TableCell>
-                  <TableCell>Resume</TableCell>
-                  <TableCell>Cover Letter</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {currentApplications.map((app) => (
-                  <TableRow key={app.id}>
-                    <TableCell>{app.name}</TableCell>
-                    <TableCell>{app.email}</TableCell>
-                    <TableCell>{app.phone || "N/A"}</TableCell>
-                    <TableCell>
-                      {jobs.find((job) => job.id === app.jobId)?.title ||
-                        "Unknown"}
-                    </TableCell>
-                    <TableCell>
-                      {app.resume ? (
-                        <Button
-                          variant="contained"
-                          size="small"
+          {!isSmallScreen ? (
+            <Box sx={{ overflowX: "auto" }}>
+              <Table sx={{ minWidth: 700 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Phone</TableCell>
+                    <TableCell>Job Title</TableCell>
+                    <TableCell>Resume</TableCell>
+                    <TableCell>Cover Letter</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {currentApplications.map((app) => (
+                    <TableRow key={app.id}>
+                      <TableCell>{app.name}</TableCell>
+                      <TableCell>{app.email}</TableCell>
+                      <TableCell>{app.phone || "N/A"}</TableCell>
+                      <TableCell>
+                        {jobs.find((job) => job.id === app.jobId)?.title ||
+                          "Unknown"}
+                      </TableCell>
+                      <TableCell>
+                        {app.resume ? (
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              backgroundColor: "#007bff",
+                              color: "#fff",
+                              textTransform: "none",
+                              padding: "4px 8px",
+                              fontSize: "0.75rem",
+                              borderRadius: "4px",
+                            }}
+                            onClick={() => window.open(app.resume, "_blank")}
+                          >
+                            📄 Open Resume
+                          </Button>
+                        ) : (
+                          "No Resume"
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {app.coverLetter ? (
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              backgroundColor: "#6c757d",
+                              color: "#fff",
+                              textTransform: "none",
+                              padding: "4px 8px",
+                              fontSize: "0.75rem",
+                              borderRadius: "4px",
+                            }}
+                            onClick={() =>
+                              window.open(app.coverLetter, "_blank")
+                            }
+                          >
+                            📝 Open Cover Letter
+                          </Button>
+                        ) : (
+                          "No Cover Letter"
+                        )}
+                      </TableCell>
+                      <TableCell>{app.status}</TableCell>
+                      <TableCell>
+                        <Box
                           sx={{
-                            backgroundColor: "#007bff",
-                            color: "#fff",
-                            textTransform: "none",
-                            padding: "4px 8px",
-                            fontSize: "0.75rem",
-                            borderRadius: "4px",
+                            display: "flex",
+                            gap: 1,
+                            flexWrap: "wrap",
                           }}
-                          onClick={() => window.open(app.resume, "_blank")}
                         >
-                          📄 Open Resume
-                        </Button>
-                      ) : (
-                        "No Resume"
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {app.coverLetter ? (
-                        <Button
-                          variant="contained"
-                          size="small"
-                          sx={{
-                            backgroundColor: "#6c757d",
-                            color: "#fff",
-                            textTransform: "none",
-                            padding: "4px 8px",
-                            fontSize: "0.75rem",
-                            borderRadius: "4px",
-                          }}
-                          onClick={() => window.open(app.coverLetter, "_blank")}
-                        >
-                          📝 Open Cover Letter
-                        </Button>
-                      ) : (
-                        "No Cover Letter"
-                      )}
-                    </TableCell>
-                    <TableCell>{app.status}</TableCell>
-                    <TableCell>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          gap: 1,
-                          flexWrap: "wrap",
-                        }}
-                      >
+                          {app.status !== "Rejected" ? (
+                            <>
+                              <Button
+                                variant="contained"
+                                size="small"
+                                sx={{
+                                  backgroundColor: "#28a745",
+                                  color: "#fff",
+                                  textTransform: "none",
+                                  padding: "4px 8px",
+                                  fontSize: "0.75rem",
+                                  borderRadius: "4px",
+                                }}
+                                onClick={() =>
+                                  updateApplicationStatus(app.id, "Reviewed")
+                                }
+                              >
+                                ✅ Reviewed
+                              </Button>
+                              <Button
+                                variant="contained"
+                                size="small"
+                                sx={{
+                                  backgroundColor: "#dc3545",
+                                  color: "#fff",
+                                  textTransform: "none",
+                                  padding: "4px 8px",
+                                  fontSize: "0.75rem",
+                                  borderRadius: "4px",
+                                }}
+                                onClick={() =>
+                                  updateApplicationStatus(app.id, "Rejected")
+                                }
+                              >
+                                ❌ Reject
+                              </Button>
+                            </>
+                          ) : (
+                            <Button
+                              variant="contained"
+                              size="small"
+                              sx={{
+                                backgroundColor: "#dc3545",
+                                color: "#fff",
+                                textTransform: "none",
+                                padding: "4px 8px",
+                                fontSize: "0.75rem",
+                                borderRadius: "4px",
+                              }}
+                              onClick={() => deleteApplication(app.id)}
+                            >
+                              🗑️ Delete
+                            </Button>
+                          )}
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+          ) : (
+            <Box>
+              {currentApplications.map((app) => (
+                <Paper key={app.id} sx={{ marginBottom: 2, padding: 2 }}>
+                  <Typography variant="body1" fontWeight="bold">
+                    {app.name}
+                  </Typography>
+                  <Typography variant="body2">Email: {app.email}</Typography>
+                  <Typography variant="body2">
+                    Phone: {app.phone || "N/A"}
+                  </Typography>
+                  <Typography variant="body2">
+                    Job Title:{" "}
+                    {jobs.find((job) => job.id === app.jobId)?.title ||
+                      "Unknown"}
+                  </Typography>
+                  <Typography variant="body2">Status: {app.status}</Typography>
+                  <Box sx={{ display: "flex", gap: 1, marginTop: 1 }}>
+                    {app.status !== "Rejected" ? (
+                      <>
                         <Button
                           variant="contained"
                           size="small"
@@ -303,98 +405,99 @@ const AdminDashboard = () => {
                         >
                           ❌ Reject
                         </Button>
-                      </Box>
-                    </TableCell>
+                      </>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          backgroundColor: "#dc3545",
+                          color: "#fff",
+                          textTransform: "none",
+                          padding: "4px 8px",
+                          fontSize: "0.75rem",
+                          borderRadius: "4px",
+                        }}
+                        onClick={() => deleteApplication(app.id)}
+                      >
+                        🗑️ Delete
+                      </Button>
+                    )}
+                  </Box>
+                </Paper>
+              ))}
+            </Box>
+          )}
+
+          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={(_, page) => handlePageChange(page)}
+              color="primary"
+            />
+          </Box>
+        </Paper>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <Paper sx={{ padding: 2, marginTop: 3 }}>
+          <Typography variant="h6" gutterBottom>
+            📩 Contact Messages
+          </Typography>
+          {messages.length > 0 ? (
+            !isSmallScreen ? (
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Message</TableCell>
+                    <TableCell>Actions</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Box>
-        ) : (
-          <Box>
-            {currentApplications.map((app) => (
-              <Paper key={app.id} sx={{ marginBottom: 2, padding: 2 }}>
-                <Typography variant="body1" fontWeight="bold">
-                  {app.name}
-                </Typography>
-                <Typography variant="body2">Email: {app.email}</Typography>
-                <Typography variant="body2">
-                  Phone: {app.phone || "N/A"}
-                </Typography>
-                <Typography variant="body2">
-                  Job Title:{" "}
-                  {jobs.find((job) => job.id === app.jobId)?.title || "Unknown"}
-                </Typography>
-                <Typography variant="body2">Status: {app.status}</Typography>
-                <Box sx={{ display: "flex", gap: 1, marginTop: 1 }}>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{
-                      backgroundColor: "#28a745",
-                      color: "#fff",
-                      textTransform: "none",
-                      padding: "4px 8px",
-                      fontSize: "0.75rem",
-                      borderRadius: "4px",
-                    }}
-                    onClick={() => updateApplicationStatus(app.id, "Reviewed")}
-                  >
-                    ✅ Reviewed
-                  </Button>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{
-                      backgroundColor: "#dc3545",
-                      color: "#fff",
-                      textTransform: "none",
-                      padding: "4px 8px",
-                      fontSize: "0.75rem",
-                      borderRadius: "4px",
-                    }}
-                    onClick={() => updateApplicationStatus(app.id, "Rejected")}
-                  >
-                    ❌ Reject
-                  </Button>
-                </Box>
-              </Paper>
-            ))}
-          </Box>
-        )}
-
-        <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={(_, page) => handlePageChange(page)}
-            color="primary"
-          />
-        </Box>
-      </Paper>
-
-      <Paper sx={{ padding: 2, marginTop: 3 }}>
-        <Typography variant="h6" gutterBottom>
-          📩 Contact Messages
-        </Typography>
-        {messages.length > 0 ? (
-          !isSmallScreen ? (
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Message</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+                </TableHead>
+                <TableBody>
+                  {currentMessages.map((msg) => (
+                    <TableRow key={msg.id}>
+                      <TableCell>{msg.name}</TableCell>
+                      <TableCell>{msg.email}</TableCell>
+                      <TableCell>{msg.message}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => deleteMessage(msg.id)}
+                          size="small"
+                          sx={{
+                            padding: "4px 8px",
+                            fontSize: "0.75rem",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <Box>
                 {currentMessages.map((msg) => (
-                  <TableRow key={msg.id}>
-                    <TableCell>{msg.name}</TableCell>
-                    <TableCell>{msg.email}</TableCell>
-                    <TableCell>{msg.message}</TableCell>
-                    <TableCell>
+                  <Paper key={msg.id} sx={{ marginBottom: 2, padding: 2 }}>
+                    <Typography variant="body1" fontWeight="bold">
+                      {msg.name}
+                    </Typography>
+                    <Typography variant="body2">Email: {msg.email}</Typography>
+                    <Typography variant="body2">
+                      Message: {msg.message}
+                    </Typography>
+                    <Box sx={{ marginTop: 1 }}>
                       <Button
                         variant="contained"
                         color="error"
@@ -408,54 +511,25 @@ const AdminDashboard = () => {
                       >
                         Delete
                       </Button>
-                    </TableCell>
-                  </TableRow>
+                    </Box>
+                  </Paper>
                 ))}
-              </TableBody>
-            </Table>
+              </Box>
+            )
           ) : (
-            <Box>
-              {currentMessages.map((msg) => (
-                <Paper key={msg.id} sx={{ marginBottom: 2, padding: 2 }}>
-                  <Typography variant="body1" fontWeight="bold">
-                    {msg.name}
-                  </Typography>
-                  <Typography variant="body2">Email: {msg.email}</Typography>
-                  <Typography variant="body2">
-                    Message: {msg.message}
-                  </Typography>
-                  <Box sx={{ marginTop: 1 }}>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={() => deleteMessage(msg.id)}
-                      size="small"
-                      sx={{
-                        padding: "4px 8px",
-                        fontSize: "0.75rem",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </Box>
-                </Paper>
-              ))}
-            </Box>
-          )
-        ) : (
-          <Typography align="center">No messages found.</Typography>
-        )}
+            <Typography align="center">No messages found.</Typography>
+          )}
 
-        <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-          <Pagination
-            count={totalMessagePages}
-            page={currentMessagePage}
-            onChange={(_, page) => handleMessagePageChange(page)}
-            color="primary"
-          />
-        </Box>
-      </Paper>
+          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+            <Pagination
+              count={totalMessagePages}
+              page={currentMessagePage}
+              onChange={(_, page) => handleMessagePageChange(page)}
+              color="primary"
+            />
+          </Box>
+        </Paper>
+      </motion.div>
     </Box>
   );
 };

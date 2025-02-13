@@ -7,6 +7,7 @@ import {
   Alert,
   Container,
 } from "@mui/material";
+import { motion } from "framer-motion";
 import styles from "./AdminLogin.module.css";
 import { useFormik } from "formik";
 import { LOGIN_VALIDATION_SCHEMA } from "../../constants";
@@ -38,7 +39,13 @@ const AdminLogin = () => {
   });
 
   return (
-    <div className={styles.container}>
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5 }}
+      className={styles.container}
+    >
       <Box className={styles.leftSection}>
         <Typography variant="h3" className={styles.welcomeText}>
           Welcome to Online Job Portal
@@ -105,7 +112,7 @@ const AdminLogin = () => {
           </Box>
         </Container>
       </Box>
-    </div>
+    </motion.div>
   );
 };
 
