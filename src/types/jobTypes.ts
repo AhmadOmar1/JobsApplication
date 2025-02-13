@@ -18,3 +18,10 @@ export type ICardJob = Omit<
   IJob,
   "description" | "deadline" | "qualifications" | "requirements"
 >;
+
+export interface IMessage {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+}

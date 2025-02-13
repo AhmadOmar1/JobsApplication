@@ -91,7 +91,7 @@ const ViewMore = () => {
               Browse Jobs
             </Typography>
             <Typography variant="body1" sx={{ fontWeight: "500" }}>
-              <span style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
+              <span style={{ marginRight: 3 ,cursor: "pointer" }} onClick={() => navigate("/")}>
                 Home
               </span>
               / <span style={{ textDecoration: "underline" }}>Jobs</span>

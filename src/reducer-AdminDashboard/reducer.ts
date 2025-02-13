@@ -1,6 +1,6 @@
 import { IApplication } from "../types/applicationTypes";
 
-export interface AdminDashboardState {
+export interface IAdminDashboardState {
   filterStatus: string;
   currentPage: number;
   currentJobPage: number;
@@ -14,7 +14,7 @@ export interface AdminDashboardState {
   }>;
 }
 
-export const initialState: AdminDashboardState = {
+export const initialState: IAdminDashboardState = {
   filterStatus: "All",
   currentPage: 1,
   currentJobPage: 1,
@@ -40,9 +40,9 @@ type Action =
     };
 
 export const adminDashboardReducer = (
-  state: AdminDashboardState = initialState,
+  state: IAdminDashboardState = initialState,
   action: Action
-): AdminDashboardState => {
+): IAdminDashboardState => {
   switch (action.type) {
     case "FILTER_STATUS":
       return { ...state, filterStatus: action.payload };

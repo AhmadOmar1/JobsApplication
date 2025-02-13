@@ -20,11 +20,11 @@ const jobTypes: IJob["type"][] = [
   "Remote",
 ];
 
-interface JobFormProps {
+interface IJobFormProps {
   onSubmit: (jobData: Omit<IJob, "id">) => void;
 }
 
-const JobForm = ({ onSubmit }: JobFormProps) => {
+const JobForm = ({ onSubmit }: IJobFormProps) => {
   const [jobData, setJobData] = useState<Omit<IJob, "id">>({
     title: "",
     company: "",

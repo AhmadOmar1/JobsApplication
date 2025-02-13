@@ -6,12 +6,12 @@ import {
   setJobsInLocalStorage,
 } from "../utils/localStorage";
 
-interface JobContextType {
+interface IJobContextType {
   jobs: IJob[];
   setJobs: (jobs: IJob[]) => void;
 }
 
-export const JobContext = createContext<JobContextType | null>(null);
+export const JobContext = createContext<IJobContextType | null>(null);
 
 export const JobProvider = ({ children }: { children: ReactNode }) => {
   const [jobs, setJobs] = useState<IJob[]>([]);

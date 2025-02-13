@@ -1,28 +1,22 @@
-import { useEffect, useReducer } from "react";
+// AdminDashboard.tsx
+import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { motion } from "framer-motion";
 import {
   Box,
   Typography,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
   Paper,
-  Button,
+  FormControl,
   Select,
   MenuItem,
-  FormControl,
   useMediaQuery,
   useTheme,
-  Pagination,
 } from "@mui/material";
 import { useApplications } from "../../hooks/useApplications";
 import { useJobs } from "../../hooks/useJobs";
 import { getApplicationsFromLocalStorage } from "../../utils/localStorage";
 import {
   adminDashboardReducer,
-  AdminDashboardState,
+  IAdminDashboardState,
   initialState,
 } from "../../reducer-AdminDashboard/reducer";
 import {
@@ -35,15 +29,20 @@ import {
   AdminDashboardAction,
 } from "../../reducer-AdminDashboard/actions";
 
+import JobsTable from "../../components/JobsTable/JobsTable";
+import ApplicationsTable from "../../components/ApplicationsTable/ApplicationsTable";
+import MessagesTable from "../../components/MessagesTable/MessagesTable";
+import PaginationControls from "../../components/PaginationControls/PaginationControls";
+
 const AdminDashboard = () => {
   const { applications, updateApplicationStatus, deleteApplication } =
-    useApplications(); 
+    useApplications();
   const { jobs } = useJobs();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [state, dispatch] = useReducer<
-    React.Reducer<AdminDashboardState, AdminDashboardAction>
+    React.Reducer<IAdminDashboardState, AdminDashboardAction>
   >(adminDashboardReducer, initialState);
   const {
     filterStatus,
@@ -70,31 +69,42 @@ const AdminDashboard = () => {
     dispatch(setMessages(storedMessages));
   }, []);
 
-  const deleteMessage = (id: string) => {
-    const updatedMessages = messages.filter((msg) => msg.id !== id);
-    dispatch(setMessages(updatedMessages));
-    localStorage.setItem("contactMessages", JSON.stringify(updatedMessages));
-  };
+  const deleteMessage = useCallback(
+    (id: string) => {
+      const updatedMessages = messages.filter((msg) => msg.id !== id);
+      dispatch(setMessages(updatedMessages));
+      localStorage.setItem("contactMessages", JSON.stringify(updatedMessages));
+    },
+    [messages]
+  );
 
-  const jobApplicationCount = localApplications.reduce((countMap, app) => {
-    countMap[app.jobId] = (countMap[app.jobId] || 0) + 1;
-    return countMap;
-  }, {} as Record<string, number>);
+  const jobApplicationCount = useMemo(() => {
+    return localApplications.reduce((countMap, app) => {
+      countMap[app.jobId] = (countMap[app.jobId] || 0) + 1;
+      return countMap;
+    }, {} as Record<string, number>);
+  }, [localApplications]);
 
   const jobsWithApplications = jobs.filter(
     (job) => jobApplicationCount[job.id]
   );
 
-  const filteredApplications = applications.filter(
-    (app) => filterStatus === "All" || app.status === filterStatus
-  );
+  const filteredApplications = useMemo(() => {
+    return applications.filter(
+      (app) => filterStatus === "All" || app.status === filterStatus
+    );
+  }, [applications, filterStatus]);
 
-  const indexOfLastApplication = currentPage * applicationsPerPage;
-  const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
-  const currentApplications = filteredApplications.slice(
-    indexOfFirstApplication,
-    indexOfLastApplication
-  );
+  const currentApplications = useMemo(() => {
+    const indexOfLastApplication = currentPage * applicationsPerPage;
+    const indexOfFirstApplication =
+      indexOfLastApplication - applicationsPerPage;
+    return filteredApplications.slice(
+      indexOfFirstApplication,
+      indexOfLastApplication
+    );
+  }, [filteredApplications, currentPage]);
+
   const totalPages = Math.ceil(
     filteredApplications.length / applicationsPerPage
   );
@@ -115,22 +125,22 @@ const AdminDashboard = () => {
   );
   const totalMessagePages = Math.ceil(messages.length / messagesPerPage);
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = useCallback((page: number) => {
     dispatch(setCurrentPage(page));
-  };
+  }, []);
 
-  const handleJobPageChange = (page: number) => {
+  const handleJobPageChange = useCallback((page: number) => {
     dispatch(setCurrentJobPage(page));
-  };
+  }, []);
 
-  const handleMessagePageChange = (page: number) => {
+  const handleMessagePageChange = useCallback((page: number) => {
     dispatch(setCurrentMessagePage(page));
-  };
+  }, []);
 
-  const handleFilterChange = (value: string) => {
+  const handleFilterChange = useCallback((value: string) => {
     dispatch(setFilterStatus(value));
     dispatch(setCurrentPage(1));
-  };
+  }, []);
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -151,42 +161,13 @@ const AdminDashboard = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <Paper sx={{ padding: 2, marginBottom: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              📊 Total Applications Per Job
-            </Typography>
-            <Box sx={{ overflowX: "auto" }}>
-              <Table sx={{ minWidth: 290 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Job Title</TableCell>
-                    <TableCell align="center">Total Applications</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {currentJobs.map((job) => (
-                    <TableRow key={job.id}>
-                      <TableCell>{job.title}</TableCell>
-                      <TableCell align="center">
-                        {jobApplicationCount[job.id]}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-
-            <Box
-              sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}
-            >
-              <Pagination
-                count={totalJobPages}
-                page={currentJobPage}
-                onChange={(_, page) => handleJobPageChange(page)}
-                color="primary"
-              />
-            </Box>
-          </Paper>
+          <JobsTable
+            jobs={currentJobs}
+            jobApplicationCount={jobApplicationCount}
+            currentJobPage={currentJobPage}
+            totalJobPages={totalJobPages}
+            handleJobPageChange={handleJobPageChange}
+          />
         </motion.div>
       )}
 
@@ -212,231 +193,19 @@ const AdminDashboard = () => {
             </Select>
           </FormControl>
 
-          {!isSmallScreen ? (
-            <Box sx={{ overflowX: "auto" }}>
-              <Table sx={{ minWidth: 700 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Phone</TableCell>
-                    <TableCell>Job Title</TableCell>
-                    <TableCell>Resume</TableCell>
-                    <TableCell>Cover Letter</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {currentApplications.map((app) => (
-                    <TableRow key={app.id}>
-                      <TableCell>{app.name}</TableCell>
-                      <TableCell>{app.email}</TableCell>
-                      <TableCell>{app.phone || "N/A"}</TableCell>
-                      <TableCell>
-                        {jobs.find((job) => job.id === app.jobId)?.title ||
-                          "Unknown"}
-                      </TableCell>
-                      <TableCell>
-                        {app.resume ? (
-                          <Button
-                            variant="contained"
-                            size="small"
-                            sx={{
-                              backgroundColor: "#007bff",
-                              color: "#fff",
-                              textTransform: "none",
-                              padding: "4px 8px",
-                              fontSize: "0.75rem",
-                              borderRadius: "4px",
-                            }}
-                            onClick={() => window.open(app.resume, "_blank")}
-                          >
-                            📄 Open Resume
-                          </Button>
-                        ) : (
-                          "No Resume"
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {app.coverLetter ? (
-                          <Button
-                            variant="contained"
-                            size="small"
-                            sx={{
-                              backgroundColor: "#6c757d",
-                              color: "#fff",
-                              textTransform: "none",
-                              padding: "4px 8px",
-                              fontSize: "0.75rem",
-                              borderRadius: "4px",
-                            }}
-                            onClick={() =>
-                              window.open(app.coverLetter, "_blank")
-                            }
-                          >
-                            📝 Open Cover Letter
-                          </Button>
-                        ) : (
-                          "No Cover Letter"
-                        )}
-                      </TableCell>
-                      <TableCell>{app.status}</TableCell>
-                      <TableCell>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            gap: 1,
-                            flexWrap: "wrap",
-                          }}
-                        >
-                          {app.status !== "Rejected" ? (
-                            <>
-                              <Button
-                                variant="contained"
-                                size="small"
-                                sx={{
-                                  backgroundColor: "#28a745",
-                                  color: "#fff",
-                                  textTransform: "none",
-                                  padding: "4px 8px",
-                                  fontSize: "0.75rem",
-                                  borderRadius: "4px",
-                                }}
-                                onClick={() =>
-                                  updateApplicationStatus(app.id, "Reviewed")
-                                }
-                              >
-                                ✅ Reviewed
-                              </Button>
-                              <Button
-                                variant="contained"
-                                size="small"
-                                sx={{
-                                  backgroundColor: "#dc3545",
-                                  color: "#fff",
-                                  textTransform: "none",
-                                  padding: "4px 8px",
-                                  fontSize: "0.75rem",
-                                  borderRadius: "4px",
-                                }}
-                                onClick={() =>
-                                  updateApplicationStatus(app.id, "Rejected")
-                                }
-                              >
-                                ❌ Reject
-                              </Button>
-                            </>
-                          ) : (
-                            <Button
-                              variant="contained"
-                              size="small"
-                              sx={{
-                                backgroundColor: "#dc3545",
-                                color: "#fff",
-                                textTransform: "none",
-                                padding: "4px 8px",
-                                fontSize: "0.75rem",
-                                borderRadius: "4px",
-                              }}
-                              onClick={() => deleteApplication(app.id)}
-                            >
-                              🗑️ Delete
-                            </Button>
-                          )}
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          ) : (
-            <Box>
-              {currentApplications.map((app) => (
-                <Paper key={app.id} sx={{ marginBottom: 2, padding: 2 }}>
-                  <Typography variant="body1" fontWeight="bold">
-                    {app.name}
-                  </Typography>
-                  <Typography variant="body2">Email: {app.email}</Typography>
-                  <Typography variant="body2">
-                    Phone: {app.phone || "N/A"}
-                  </Typography>
-                  <Typography variant="body2">
-                    Job Title:{" "}
-                    {jobs.find((job) => job.id === app.jobId)?.title ||
-                      "Unknown"}
-                  </Typography>
-                  <Typography variant="body2">Status: {app.status}</Typography>
-                  <Box sx={{ display: "flex", gap: 1, marginTop: 1 }}>
-                    {app.status !== "Rejected" ? (
-                      <>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          sx={{
-                            backgroundColor: "#28a745",
-                            color: "#fff",
-                            textTransform: "none",
-                            padding: "4px 8px",
-                            fontSize: "0.75rem",
-                            borderRadius: "4px",
-                          }}
-                          onClick={() =>
-                            updateApplicationStatus(app.id, "Reviewed")
-                          }
-                        >
-                          ✅ Reviewed
-                        </Button>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          sx={{
-                            backgroundColor: "#dc3545",
-                            color: "#fff",
-                            textTransform: "none",
-                            padding: "4px 8px",
-                            fontSize: "0.75rem",
-                            borderRadius: "4px",
-                          }}
-                          onClick={() =>
-                            updateApplicationStatus(app.id, "Rejected")
-                          }
-                        >
-                          ❌ Reject
-                        </Button>
-                      </>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{
-                          backgroundColor: "#dc3545",
-                          color: "#fff",
-                          textTransform: "none",
-                          padding: "4px 8px",
-                          fontSize: "0.75rem",
-                          borderRadius: "4px",
-                        }}
-                        onClick={() => deleteApplication(app.id)}
-                      >
-                        🗑️ Delete
-                      </Button>
-                    )}
-                  </Box>
-                </Paper>
-              ))}
-            </Box>
-          )}
+          <ApplicationsTable
+            applications={currentApplications}
+            jobs={jobs}
+            updateApplicationStatus={updateApplicationStatus}
+            deleteApplication={deleteApplication}
+            isSmallScreen={isSmallScreen}
+          />
 
-          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-            <Pagination
-              count={totalPages}
-              page={currentPage}
-              onChange={(_, page) => handlePageChange(page)}
-              color="primary"
-            />
-          </Box>
+          <PaginationControls
+            count={totalPages}
+            page={currentPage}
+            onChange={(_, page) => handlePageChange(page)}
+          />
         </Paper>
       </motion.div>
 
@@ -446,89 +215,14 @@ const AdminDashboard = () => {
         transition={{ duration: 0.5, delay: 0.6 }}
         viewport={{ once: true }}
       >
-        <Paper sx={{ padding: 2, marginTop: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            📩 Contact Messages
-          </Typography>
-          {messages.length > 0 ? (
-            !isSmallScreen ? (
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Message</TableCell>
-                    <TableCell>Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {currentMessages.map((msg) => (
-                    <TableRow key={msg.id}>
-                      <TableCell>{msg.name}</TableCell>
-                      <TableCell>{msg.email}</TableCell>
-                      <TableCell>{msg.message}</TableCell>
-                      <TableCell>
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => deleteMessage(msg.id)}
-                          size="small"
-                          sx={{
-                            padding: "4px 8px",
-                            fontSize: "0.75rem",
-                            borderRadius: "4px",
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            ) : (
-              <Box>
-                {currentMessages.map((msg) => (
-                  <Paper key={msg.id} sx={{ marginBottom: 2, padding: 2 }}>
-                    <Typography variant="body1" fontWeight="bold">
-                      {msg.name}
-                    </Typography>
-                    <Typography variant="body2">Email: {msg.email}</Typography>
-                    <Typography variant="body2">
-                      Message: {msg.message}
-                    </Typography>
-                    <Box sx={{ marginTop: 1 }}>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        onClick={() => deleteMessage(msg.id)}
-                        size="small"
-                        sx={{
-                          padding: "4px 8px",
-                          fontSize: "0.75rem",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </Box>
-                  </Paper>
-                ))}
-              </Box>
-            )
-          ) : (
-            <Typography align="center">No messages found.</Typography>
-          )}
-
-          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-            <Pagination
-              count={totalMessagePages}
-              page={currentMessagePage}
-              onChange={(_, page) => handleMessagePageChange(page)}
-              color="primary"
-            />
-          </Box>
-        </Paper>
+        <MessagesTable
+          messages={currentMessages}
+          currentMessagePage={currentMessagePage}
+          totalMessagePages={totalMessagePages}
+          handleMessagePageChange={handleMessagePageChange}
+          deleteMessage={deleteMessage}
+          isSmallScreen={isSmallScreen}
+        />
       </motion.div>
     </Box>
   );

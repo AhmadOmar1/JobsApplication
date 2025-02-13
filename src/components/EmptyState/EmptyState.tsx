@@ -2,11 +2,11 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
 
-interface EmptyStateProps {
+interface IEmptyStateProps {
     message?: string;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ message = "No results found." }) => {
+const EmptyState: React.FC<IEmptyStateProps> = ({ message = "No results found." }) => {
     return (
         <Box
             sx={{
