@@ -29,7 +29,15 @@ const JobsTable: React.FC<IJobsTableProps> = ({
 }) => {
   return (
     <Paper sx={{ padding: 2, marginBottom: 3 }}>
-      <Typography variant="h6" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        sx={{
+          color: "rgb(126, 104, 16)",
+          textShadow: "1px 1px 1px rgba(18, 23, 1, 0.4)",
+          fontWeight: "bold",
+        }}
+      >
         📊 Total Applications Per Job
       </Typography>
       <Box sx={{ overflowX: "auto" }}>

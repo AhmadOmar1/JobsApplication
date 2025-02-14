@@ -40,9 +40,15 @@ const JobCard: React.FC<IJobCardProps> = ({
         }}
       >
         <Typography
-          variant="h6"
+          variant="h5"
           component="div"
-          sx={{ fontWeight: "bold", color: "#333", marginBottom: 1 }}
+          sx={{
+            fontWeight: "bold",
+            fontStyle: "italic",
+            marginBottom: 1,
+            color: " rgb(9, 89, 22)",
+            textShadow: "2px 2px 5px rgba(222, 191, 12, 0.6)",
+          }}
         >
           {title || "No Title"}
         </Typography>

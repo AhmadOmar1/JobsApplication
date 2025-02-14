@@ -44,7 +44,7 @@ const Navbar = () => {
       <AppBar
         position={isTransparentNavbar ? "absolute" : "static"}
         sx={{
-          backgroundColor: isTransparentNavbar ? "transparent" : "#1976d2",
+          backgroundColor: isTransparentNavbar ? "transparent" : "#2f4780",
           boxShadow: isTransparentNavbar
             ? "none"
             : "0px 4px 10px rgba(0, 0, 0, 0.1)",
@@ -68,7 +68,7 @@ const Navbar = () => {
             sx={{
               fontWeight: "bold",
               cursor: "pointer",
-              color: isTransparentNavbar ? "#FFFFFF" : "#FFFFFF",
+              color: isTransparentNavbar ? "#FFD700" : "#FFFFFF",
               "&:hover": {
                 opacity: 0.8,
               },
@@ -86,17 +86,21 @@ const Navbar = () => {
             />
           </Typography>
 
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 4 }}>
             {navLinks.map((link) => (
               <Button
                 key={link.label}
                 sx={{
-                  color: isTransparentNavbar ? "#FFFFFF" : "white",
+                  color: isTransparentNavbar ? "#FFD700" : "white",
                   textTransform: "none",
-                  fontSize: "16px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  textShadow: "2px 2px 5px rgba(175, 151, 18, 0.6)",
+                  transition: "all 0.3s ease-in-out",
                   "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    borderRadius: "4px",
+                    color: "#FFFFFF",
+                    textShadow: "2px 2px 12px rgb(143, 123, 11)",
+                    borderBottom: "2px solid #FFD700",
                   },
                 }}
                 onClick={() => navigate(link.path)}
@@ -107,12 +111,16 @@ const Navbar = () => {
             {!isAuthenticated ? (
               <Button
                 sx={{
-                  color: isTransparentNavbar ? "#FFFFFF" : "white",
+                  color: isTransparentNavbar ? "#FFD700" : "white",
                   textTransform: "none",
-                  fontSize: "16px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  textShadow: "2px 2px 5px  rgba(175, 151, 18, 0.6)",
+                  transition: "all 0.3s ease-in-out",
                   "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    borderRadius: "4px",
+                    color: "#FFFFFF",
+                    textShadow: "2px 2px 12px rgb(143, 123, 11)",
+                    borderBottom: "2px solid #FFD700",
                   },
                 }}
                 onClick={() => navigate("/admin/login")}
@@ -122,12 +130,16 @@ const Navbar = () => {
             ) : (
               <Button
                 sx={{
-                  color: isTransparentNavbar ? "#FFFFFF" : "white",
+                  color: isTransparentNavbar ? "#FFD700" : "white",
                   textTransform: "none",
                   fontSize: "16px",
+                  fontWeight: "bold",
+                  textShadow: "2px 2px 5px rgba(255, 215, 0, 0.6)",
+                  transition: "all 0.3s ease-in-out",
                   "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    borderRadius: "4px",
+                    color: "#FFFFFF",
+                    textShadow: "2px 2px 12px rgba(255, 215, 0, 1)",
+                    borderBottom: "2px solid #FFD700",
                   },
                 }}
                 onClick={logout}

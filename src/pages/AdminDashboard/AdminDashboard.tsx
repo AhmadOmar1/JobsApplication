@@ -148,7 +148,18 @@ const AdminDashboard = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Typography variant="h4" gutterBottom>
+        <Typography
+          variant="h3"
+          gutterBottom
+          sx={{
+            textAlign: "center",
+            marginTop: 3,
+            marginBottom: 3,
+            fontStyle: "italic",
+            color: " rgb(11, 86, 23)",
+            textShadow: "2px 2px 5px rgba(106, 92, 11, 0.6)",
+          }}
+        >
           Admin Dashboard
         </Typography>
       </motion.div>
@@ -177,7 +188,17 @@ const AdminDashboard = () => {
         viewport={{ once: true }}
       >
         <Paper sx={{ padding: 2, marginBottom: 3 }}>
-          <Typography variant="h6" gutterBottom>
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{
+              color: "rgb(126, 104, 16)",
+              textShadow: "1px 1px 1px rgba(18, 23, 1, 0.4)",
+              fontWeight: "bold",
+              marginTop: 2,
+              marginBottom: 2,
+            }}
+          >
             📄 Job Applications
           </Typography>
           <FormControl sx={{ minWidth: 200, marginBottom: 2 }}>

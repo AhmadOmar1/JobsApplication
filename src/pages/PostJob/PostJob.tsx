@@ -39,7 +39,19 @@ const PostJob = () => {
         <Box className={styles.header}></Box>
 
         <Paper className={styles.paper}>
-          <Typography variant="h5" gutterBottom className={styles.title}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            className={styles.title}
+            sx={{
+              textAlign: "center",
+              marginBottom: 3,
+              fontStyle: "italic",
+              fontWeight: "bold", 
+              color: " rgb(11, 86, 23)",
+              textShadow: "2px 2px 5px rgba(106, 92, 11, 0.6)",
+            }}
+          >
             Post a New Job
           </Typography>
           <JobForm onSubmit={handleSubmit} />

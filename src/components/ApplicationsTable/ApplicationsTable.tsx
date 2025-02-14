@@ -34,9 +34,6 @@ const ApplicationsTable: React.FC<IApplicationsTableProps> = ({
 }) => {
   return (
     <Paper sx={{ padding: 2, marginBottom: 3 }}>
-      <Typography variant="h6" gutterBottom>
-        📄 Job Applications
-      </Typography>
       {!isSmallScreen ? (
         <Box sx={{ overflowX: "auto" }}>
           <Table sx={{ minWidth: 700 }}>
