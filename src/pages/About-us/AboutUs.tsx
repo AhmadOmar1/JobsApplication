@@ -39,7 +39,15 @@ const AboutUs = () => {
               fontSize: { xs: "1.8rem", sm: "2.5rem" },
             }}
           >
-            Welcome to <span style={{ color: "#1976d2" }}>Your Career Hub</span>
+            Welcome to{" "}
+            <span
+              style={{
+                color: "rgb(8, 92, 175)",
+                textShadow: "2px 2px 5px rgba(13, 222, 180, 0.6)",
+              }}
+            >
+              Your Career Hub
+            </span>
           </Typography>
           <Typography
             variant="body1"

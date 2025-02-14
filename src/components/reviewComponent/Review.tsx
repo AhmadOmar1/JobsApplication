@@ -18,14 +18,14 @@ const reviews = [
   {
     id: 2,
     name: "Elyas Alhaj",
-    date: "14/9/2025",
+    date: "14/10/2025",
     review: "Simple layout, great recommendations...",
     avatar: avatar2,
   },
   {
     id: 3,
     name: "Waseem Atrash",
-    date: "14/9/2025",
+    date: "14/11/2025",
     review: "Clean design and useful suggestions...",
     avatar: avatar3,
   },
@@ -38,7 +38,7 @@ const sliderSettings = {
   slidesToShow: 3,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 2000,
+  autoplaySpeed: 1500,
   pauseOnHover: false,
   responsive: [
     {

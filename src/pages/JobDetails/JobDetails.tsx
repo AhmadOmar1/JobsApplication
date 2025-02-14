@@ -39,12 +39,23 @@ const JobDetails = () => {
           padding: 4,
           maxWidth: 800,
           margin: "auto",
+          marginTop: "20px",
           backgroundColor: "#f9f9f9",
           borderRadius: 2,
           boxShadow: 2,
         }}
       >
-        <Typography variant="h3" sx={{ fontWeight: "bold", marginBottom: 2 }}>
+        <Typography
+          variant="h3"
+          sx={{
+            fontWeight: "bold",
+            fontStyle: "italic",
+            marginBottom: 2,
+            textAlign: "center",
+            color: " rgb(9, 89, 22)",
+            textShadow: "2px 2px 5px rgba(222, 191, 12, 0.6)",
+          }}
+        >
           {job.title}
         </Typography>
 
@@ -72,14 +83,14 @@ const JobDetails = () => {
           <strong>Deadline:</strong> {job.deadline}
         </Typography>
 
-        <Typography variant="h5" sx={{ marginTop: 3, fontWeight: "bold" }}>
+        <Typography variant="h4" sx={{ marginTop: 3, fontWeight: "bold" }}>
           Job Description:
         </Typography>
-        <Typography variant="body1" sx={{ marginBottom: 3 }}>
+        <Typography variant="body2" sx={{ marginBottom: 3, marginTop: 1, fontSize: "18px",}}>
           {job.description}
         </Typography>
 
-        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
           Qualifications:
         </Typography>
         <List sx={{ marginBottom: 3 }}>
@@ -96,7 +107,7 @@ const JobDetails = () => {
           )}
         </List>
 
-        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
           Requirements:
         </Typography>
         <List sx={{ marginBottom: 3 }}>

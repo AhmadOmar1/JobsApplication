@@ -49,7 +49,8 @@ const ContactUs = () => {
               textAlign: "center",
               fontWeight: "bold",
               marginBottom: 4,
-              color: "#333",
+              color: " rgb(9, 89, 22)",
+              textShadow: "2px 2px 5px rgba(172, 154, 53, 0.6)",
             }}
           >
             Contact Us

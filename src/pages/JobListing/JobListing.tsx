@@ -43,9 +43,10 @@ const JobListing = () => {
             backgroundImage: `url(${slider})`,
             backgroundSize: {
               xs: "cover",
-              md: "contain", 
+              md: "contain",
             },
             backgroundPosition: "center",
+            filter: "brightness(1.2)",
           }}
         >
           <Box
@@ -70,13 +71,27 @@ const JobListing = () => {
             >
               <Typography
                 variant="h1"
-                sx={{ fontWeight: "600", textAlign: "center" }}
+                sx={{
+                  textAlign: "center",
+                  fontStyle: "italic",
+                  color: "rgb(196, 144, 40)",
+                  textShadow: "2px 2px 2px rgba(255, 215, 0, 0.4)",
+                }}
               >
                 Find Your Dream Job!
               </Typography>
+
               <Typography
-                variant="body1"
-                sx={{ marginTop: 2, textAlign: "center", marginBottom: 18 }}
+                variant="body2"
+                sx={{
+                  marginTop: 2,
+                  marginBottom: 18,
+                  textAlign: "center",
+                  fontWeight: "500",
+                  fontSize: "1.5rem",
+                  color: "white",
+                 
+                }}
               >
                 Explore Thousands of Job opportunities tailored just for you.
                 Start Now!
