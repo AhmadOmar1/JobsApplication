@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 import avatar1 from "../../assets/avatar-01.png";
 import avatar2 from "../../assets/avatar-02.png";
 import avatar3 from "../../assets/avatar-03.png";

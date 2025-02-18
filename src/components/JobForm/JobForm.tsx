@@ -1,3 +1,4 @@
+import styles from "./job-form.module.css";
 import { useState } from "react";
 import {
   Box,
@@ -9,9 +10,9 @@ import {
   FormControl,
   SelectChangeEvent,
 } from "@mui/material";
+
 import { IJob } from "../../types/jobTypes";
 import { validateField, validateForm } from "../../utils/validation";
-import styles from "./job-form.module.css";
 
 const jobTypes: IJob["type"][] = [
   "Full-time",

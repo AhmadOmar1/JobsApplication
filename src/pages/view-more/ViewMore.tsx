@@ -1,7 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { JobContext } from "../../providers/JobProvider";
-import JobCard from "../../components/JobCard/JobCard";
-import bgImage from "../../assets/bg-1.jpg";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Container,
@@ -12,9 +10,13 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { filterJobs } from "../../utils/filters";
 import { motion } from "framer-motion";
+
+import { JobContext } from "../../providers/JobProvider";
+import { filterJobs } from "../../utils/filters";
+
+import bgImage from "../../assets/bg-1.jpg";
+import JobCard from "../../components/JobCard/JobCard";
 
 const ViewMore = () => {
   const { jobs } = useContext(JobContext)!;

@@ -1,11 +1,12 @@
-import { useJobs } from "../../hooks/useJobs";
+import styles from "./post-job.module.css";
 import { Box, Typography, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { IJob } from "../../types/jobTypes";
-import JobForm from "../../components/JobForm/JobForm";
-import styles from "./post-job.module.css";
-import { setJobsInLocalStorage } from "../../utils/localStorage";
 import { motion } from "framer-motion";
+
+import { IJob } from "../../types/jobTypes";
+import { useJobs } from "../../hooks/useJobs";
+import { setJobsInLocalStorage } from "../../utils/localStorage";
+import JobForm from "../../components/JobForm/JobForm";
 
 const PostJob = () => {
   const { jobs, setJobs } = useJobs();
