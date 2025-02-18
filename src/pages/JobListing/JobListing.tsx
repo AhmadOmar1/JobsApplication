@@ -1,9 +1,10 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Container, Typography, TextField, Button } from "@mui/material";
+import { motion } from "framer-motion";
+ 
 import { JobContext } from "../../providers/JobProvider";
 import { filterJobs } from "../../utils/filters";
-import { motion } from "framer-motion"; 
 import slider from "../../assets/slider-1.jpg";
 import JobCard from "../../components/JobCard/JobCard";
 import ReviewsWeb from "../../components/reviewComponent/Review";

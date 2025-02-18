@@ -1,9 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Box, Typography, Button, List, ListItem } from "@mui/material";
+import { motion } from "framer-motion";
+
 import { useAuth } from "../../hooks/useAuth";
 import { useJobs } from "../../hooks/useJobs";
-import { motion } from "framer-motion";
-import { useEffect } from "react";
 
 const JobDetails = () => {
   const { jobId } = useParams<{ jobId: string }>();

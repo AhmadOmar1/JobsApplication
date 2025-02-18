@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -13,9 +14,9 @@ import {
   ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+
 import logo from "../../assets/icon_transparent.png";
+import { useAuth } from "../../hooks/useAuth";
 
 const Navbar = () => {
   const navigate = useNavigate();

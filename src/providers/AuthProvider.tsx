@@ -30,12 +30,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsAdmin(true);
       localStorage.setItem("isAdmin", "true");
       return null;
-    } else if (email === "user@user" && password === "user") {
-      setAuthStatus(true);
-      setIsAuthenticated(true);
-      setIsAdmin(false);
-      localStorage.setItem("isAdmin", "false");
-      return null;
     }
     return "Invalid email or password";
   };

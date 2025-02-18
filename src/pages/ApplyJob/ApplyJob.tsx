@@ -1,13 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
+import { motion } from "framer-motion";
+
 import { useAuth } from "../../hooks/useAuth";
 import { useJobs } from "../../hooks/useJobs";
 import { useApplications } from "../../hooks/useApplications";
 import { IApplication } from "../../types/applicationTypes";
-import { motion } from "framer-motion";
 
 import ApplicationForm from "../../components/ApplicationForm/ApplicationForm";
-import { useEffect } from "react";
 const ApplyJob = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
